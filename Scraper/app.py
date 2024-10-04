@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, request, abort
 import csv
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 
 def read_news_csv(file_name='news_headlines.csv'):
     news_data = []
