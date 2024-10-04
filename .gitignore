@@ -1,3 +1,29 @@
 *.env
 /backend/node_modules
 /frontend/node_modules
+
+/Scraper/scraper
+*.egg-info/
+*.egg
+
+
+# IDE or editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Distribution / packaging
+build/
+dist/
+*.whl
+*.tar.gz
+
+# Backup files
+*.bak
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
