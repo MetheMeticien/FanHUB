@@ -3,7 +3,7 @@ import csv
 
 app = Flask(__name__)
 
-# Function to read news from CSV
+
 def read_news_csv(file_name='news_headlines.csv'):
     news_data = []
     try:
@@ -23,7 +23,6 @@ def read_news_csv(file_name='news_headlines.csv'):
     
     return news_data
 
-# Route to get all news articles
 @app.route('/api/news', methods=['GET'])
 def get_news():
     news_data = read_news_csv()
@@ -31,7 +30,7 @@ def get_news():
         return jsonify({"error": "No news found"}), 404
     return jsonify(news_data)
 
-# Route to get a specific news article by title
+
 @app.route('/api/news/<string:title>', methods=['GET'])
 def get_news_by_title(title):
     news_data = read_news_csv()
@@ -40,7 +39,7 @@ def get_news_by_title(title):
             return jsonify(article)
     abort(404, description="News article not found")
 
-# Home route (optional, displays some instruction)
+
 @app.route('/')
 def index():
     return """
