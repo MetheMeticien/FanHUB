@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request, abort
 import csv
 from flask_cors import CORS
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import explode, split
 
 app = Flask(__name__)
 CORS(app)
@@ -47,6 +49,26 @@ def index():
     <h1>Welcome to the News API</h1>
     <p>Use <code>/api/news</code> to get all articles or <code>/api/news/&lt;title&gt;</code> to get a specific article by its title.</p>
     """
+
+@app.route('/api/analyze-news', methods=['GET'])
+def analyze_news():
+    spark = SparkSession.builder \
+        .appName("News Processing") \
+        .getOrCreate()
+    
+    news_df = spark.read.csv('news_headlines.csv', header=True)
+    
+    word_counts = news_df.select(explode(split(news_df['Paragraphs'], ' ')).alias('word')) \
+        .groupBy('word').count() \
+        .orderBy('count', ascending=False)
+    
+    word_counts_list = word_counts.limit(10).collect()
+    result = [{'word': row['word'], 'count': row['count']} for row in word_counts_list]
+
+    spark.stop()
+    
+    return jsonify(result)
+
 
 # Start the Flask application
 if __name__ == '__main__':

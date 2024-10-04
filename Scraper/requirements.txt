@@ -3,3 +3,5 @@ lxml
 requests
 flask
 flask-cors
+pyspark
+findspark
