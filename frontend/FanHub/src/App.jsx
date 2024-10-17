@@ -13,13 +13,12 @@ function App() {
   return (
     <>
       <main>
-        //{location.pathname !== '/' && <Navbar />} {/* Render Navbar only if not on LoginPage */}
+        //{location.pathname !== '/' && location.pathname !== '/register' && <Navbar />} {/* Render Navbar only if not on LoginPage */}
         <Routes>
           <Route path='/' element={<LoginPage />} />
           <Route path='/news' element={<NewsPage />} />
           <Route path='/posts' element={<PostPage />} />
           <Route path="/register" element={<RegisterPage />} />
-
         </Routes>
       </main>
     </>

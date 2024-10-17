@@ -1,21 +1,112 @@
-/* General page styling */
-.post-page {
-    padding: 10px 15px;
-    background-color: #000; /* Dark background to match your design */
-    width: 100%;
-    max-width: 500px; /* Limit the width for a centered card-like feel */
-    margin: 0 auto; /* Center the post page */
-    margin-top: 2px;
+/* Sidebar for celebrities list */
+.celebrity-sidebar {
+    width: 200px;
+    background-color: #1c1c1c;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.celebrity-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.celebrity-list li {
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.celebrity-list li:hover {
+    background-color: #3d3d3d;
+}
+
+/* Post styling */
+.post-container {
+    background-color: #2c2c2c;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 10px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    margin-right: 10px;
+}
+
+.post-header-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post-header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.post-header .username {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.post-content {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.delete-post-btn {
+    width: 100px;
+    height: 30px;
+    background-color: #ff4d4d; /* Red background */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-weight: bold; /* Bold text */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.delete-post-btn:hover {
+    background-color: #e60000; /* Darker red on hover */
+}
+
+/* Main layout for the entire page */
+.main-layout {
+    display: flex;
+    justify-content: center;
+}
+
+/* Main post area (without affecting existing elements) */
+.post-section {
+    width: 70%;
 }
 
 /* Postbar styling */
 .postbar-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     background-color: #2c2c2c; /* Dark gray background */
     padding: 10px;
+    max-width: 450px;
     border-radius: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .post-input {
@@ -50,10 +141,13 @@
 /* Filter bar styling */
 .filter-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Center the filter buttons */
     background-color: #2c2c2c; /* Same background as postbar */
     padding: 10px;
     border-radius: 20px;
+    margin-bottom: 10px;
+    width: 300px;
+    margin: 0 auto; /* Center the container itself */
     margin-bottom: 10px;
 }
 
@@ -62,7 +156,7 @@
     color: white;
     background-color: transparent;
     border: none;
-    padding: 5px 50px;
+    padding: 6px 20px;
     cursor: pointer;
     border-radius: 10px;
 }
@@ -80,10 +174,10 @@
 .notification-count {
     background-color: #b71631; /* Red background for notification */
     color: white;
-    padding: 3px 7px;
-    border-radius: 50%;
+    padding: 2px 5px;
+    border-radius: 30%;
     font-size: 12px;
     position: absolute;
     top: -10px;
-    right: -15px;
+    right: -5px;
 }
