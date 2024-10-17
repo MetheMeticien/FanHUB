@@ -35,8 +35,14 @@
     margin-bottom: 10px;
     color: white;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content:space-between;
     margin-right: 10px;
+}
+
+.post-header-content{
+    display: flex;
+    flex-direction: column;
 }
 
 .post-header {
@@ -60,6 +66,22 @@
 .post-content {
     margin-top: 10px;
     font-size: 16px;
+}
+
+.delete-post-btn {
+    width: 100px;
+    height: 30px;
+    background-color: #ff4d4d; /* Red background */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-weight: bold; /* Bold text */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.delete-post-btn:hover {
+    background-color: #e60000; /* Darker red on hover */
 }
 
 /* Main layout for the entire page */
