@@ -16,11 +16,6 @@ function Navbar (){
                     <Link to ="/posts">
                         <img src="\src\assets\posts.png" alt="posts-icon" />
                     </Link>
-                    <button id="theme-toggle">
-                    <img src="\src\assets\ruhan.jpg" alt="Toggle Dark Mode" className="theme-icon" />
-                    </button>
-
-
                 </ul>
 
             </div>

@@ -16,8 +16,6 @@ function App() {
             <Route path='/news' element={<NewsPage />} />
             <Route path='/posts' element={<PostPage />} />
             <Route path='/' element={<HomePage />} />
-            
-            
           </Routes>
         </main>
     </>
