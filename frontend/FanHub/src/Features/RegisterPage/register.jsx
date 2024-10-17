@@ -14,26 +14,34 @@ function RegisterPage() {
   return (
     <div className="register-page">
       <div className="register-container">
-        <img src={logo} alt="Logo" className="register-logo" /> {/* Add the logo here */}
-        <h1 className="register-title">Register</h1>
-        <input type="email" placeholder="Email" className="register-input" />
-        <input type="password" placeholder="Password" className="register-input" />
-        <input type="password" placeholder="Re-enter Password" className="register-input" />
-        <input type="text" placeholder="First Name" className="register-input" />
-        <input type="text" placeholder="Last Name" className="register-input" />
+        <div className="register-left">
+          <img src={logo} alt="Logo" className="register-logo" />
+        </div>
+        <div className="register-right">
+          <h1 className="register-title">Register</h1>
+          <div className="register-inputs">
+            <input type="text" placeholder="First Name" className="register-input" />
+            <input type="text" placeholder="Last Name" className="register-input" />
+            <input type="email" placeholder="Email" className="register-input email-input" />
+            <input type="password" placeholder="Password" className="register-input" />
+            <input type="password" placeholder="Re-enter Password" className="register-input" />
+          </div>
 
-        <div className="register-input">
-         <input type="radio" name="gender" id="male" value="male" /> 
-         <label htmlFor="male">Male</label>
+          {/* Gender dropdown */}
+          <div className="register-gender-dropdown">
+            <select className="register-input" defaultValue="">
+              <option value="" disabled>Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
 
-        <input type="radio" name="gender" id="female" value="female" /> 
-         <label htmlFor="female">Female</label>
-</div>
+          <button onClick={handleRegister} className="register-btn">Register</button>
 
-        <button onClick={handleRegister} className="register-btn">Register</button>
-
-        {/* Temporary button to bypass register for testing */}
-        <button onClick={() => navigate('/news')} className="register-btn">Enter Home</button>
+          {/* Temporary button to bypass register for testing */}
+          <button onClick={() => navigate('/news')} className="register-btn">Enter Home</button>
+        </div>
       </div>
     </div>
   );
