@@ -1,34 +1,35 @@
-/* src/NewsGrid.css */
-
+/* News Grid */
 .news-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 20px;
-    padding: 20px;
-  }
-  
-  .news-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .news-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .news-card h3 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .news-card p {
-    color: #666;
-  }
-  
-  
-  
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
+  padding: 80px 20px 20px; /* Adding padding for top to compensate for the fixed filter bar */
+}
+
+.nav-mid ul .active {
+  background-color: #b71631; /* Red background for active item */
+  border-radius: 20px;
+}
+
+.news-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.news-card:hover {
+  transform: scale(1.05);
+}
+
+.news-card h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.news-card p {
+  color: #666;
+}
