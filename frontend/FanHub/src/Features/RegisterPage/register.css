@@ -1,0 +1,67 @@
+
+.register-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #000; Black background */
+    background-image: url('/src/assets/bg2.webp');
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+
+  }
+  
+  .register-container {
+    background-color: #000000;
+    padding: 40px;
+    border-radius: 17px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  }
+  
+  .register-title {
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .register-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #555; /* Lighter gray for inputs */
+    border: none;
+    border-radius: 217px;
+    color: #fff;
+    outline: none;
+  }
+  
+  .register-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #b71631; /* Red button */
+    border: none;
+    color: white;
+    border-radius: 17px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .register-btn:hover {
+    background-color: #9e1228;
+  }
+  
+  .register-logo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+
+  

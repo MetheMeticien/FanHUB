@@ -4,13 +4,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000; /* Black background */
+    /* background-color: #000; Black background */
+    background-image: url('/src/assets/bg.jpg');
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover; /* Ensures the image covers the entire area */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat;
+
   }
   
   .login-container {
-    background-color: #2c2c2c; /* Dark gray container */
+    background-color: #000000; /* Dark gray container */
     padding: 40px;
-    border-radius: 20px;
+    border-radius: 17px;
     width: 300px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
@@ -28,7 +37,7 @@
     margin: 10px 0;
     background-color: #555; /* Lighter gray for inputs */
     border: none;
-    border-radius: 5px;
+    border-radius: 217px;
     color: #fff;
     outline: none;
   }
@@ -39,12 +48,18 @@
     background-color: #b71631; /* Red button */
     border: none;
     color: white;
-    border-radius: 5px;
+    border-radius: 17px;
     cursor: pointer;
     margin-top: 10px;
   }
   
   .login-btn:hover {
     background-color: #9e1228; /* Darker red on hover */
+  }
+  
+  .login-logo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
   }
   

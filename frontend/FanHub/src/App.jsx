@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from "react-route
 import PostPage from './Features/PostPage/PostPage';
 import NewsPage from './Features/NewsPage/NewsPage';
 import LoginPage from './Features/LoginPage/LoginPage';
+import RegisterPage from './Features/RegisterPage/register';
 
 function App() {
   const location = useLocation();
@@ -17,6 +18,8 @@ function App() {
           <Route path='/' element={<LoginPage />} />
           <Route path='/news' element={<NewsPage />} />
           <Route path='/posts' element={<PostPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+
         </Routes>
       </main>
     </>
