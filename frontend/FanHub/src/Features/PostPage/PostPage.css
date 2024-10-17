@@ -1,0 +1,89 @@
+/* General page styling */
+.post-page {
+    padding: 10px 15px;
+    background-color: #000; /* Dark background to match your design */
+    width: 100%;
+    max-width: 500px; /* Limit the width for a centered card-like feel */
+    margin: 0 auto; /* Center the post page */
+    margin-top: 2px;
+}
+
+/* Postbar styling */
+.postbar-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #2c2c2c; /* Dark gray background */
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.post-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #555; /* Lighter gray for the input */
+    color: #fff;
+    outline: none;
+}
+
+.create-post-btn {
+    background-color: #b71631; /* Red button */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.create-post-btn:hover {
+    background-color: #9e1228; /* Darken the red on hover */
+}
+
+.nav-mid ul .active {
+    background-color: #b71631; /* Red background for active item */
+    border-radius: 20px;
+}
+
+/* Filter bar styling */
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #2c2c2c; /* Same background as postbar */
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+/* Filter button styling */
+.filter-btn {
+    color: white;
+    background-color: transparent;
+    border: none;
+    padding: 5px 50px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.filter-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light transparent background on hover */
+}
+
+/* Notification button styling */
+.notification-btn {
+    position: relative;
+}
+
+/* Notification count bubble */
+.notification-count {
+    background-color: #b71631; /* Red background for notification */
+    color: white;
+    padding: 3px 7px;
+    border-radius: 50%;
+    font-size: 12px;
+    position: absolute;
+    top: -10px;
+    right: -15px;
+}
