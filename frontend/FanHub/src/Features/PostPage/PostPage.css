@@ -68,6 +68,17 @@
     font-size: 16px;
 }
 
+.post-textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    resize: none; /* Prevent resizing */
+}
+
+
 .delete-post-btn {
     width: 100px;
     height: 30px;
@@ -119,17 +130,36 @@
     outline: none;
 }
 
-.create-post-btn {
+.create-post-btn, .image-upload-btn{
     background-color: #b71631; /* Red button */
+    width: 100px;
+    height: 30px;
     border: none;
     color: white;
-    padding: 10px 20px;
+    padding: 10px;
     border-radius: 10px;
     margin-left: 10px;
     cursor: pointer;
 }
 
-.create-post-btn:hover {
+.uploaded-image {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.image-upload {
+    margin: 10px 0;
+}
+
+.upload-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.create-post-btn:hover{
     background-color: #9e1228; /* Darken the red on hover */
 }
 
