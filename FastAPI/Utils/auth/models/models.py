@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from FastAPI.Utils.database import Base, engine
+from Utils.database import Base, engine
 
 class User(Base):
     __tablename__ = "users"

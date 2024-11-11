@@ -99,3 +99,9 @@
 .register-btn:hover {
   background-color: #9e1228;
 }
+
+.message{
+  color: #9e1228;
+  padding: 10px;
+
+}
