@@ -181,3 +181,42 @@
     top: -10px;
     right: -5px;
 }
+
+
+
+.like-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; 
+}
+
+
+.like-post-btn {
+    background-color: #368fb5; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.1s ease;
+}
+
+.like-post-btn:hover {
+    background-color: #0b518a; 
+}
+
+.like-count {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #ccc; 
+}
+
+.dislike-post-btn {
+    background-color: #b007a2;
+}
+
+.dislike-post-btn:hover {
+    background-color: #a10a76; 
+}

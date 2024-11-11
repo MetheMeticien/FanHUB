@@ -2,9 +2,17 @@ import React, { useState } from 'react';
 import './PostPage.css';
 
 const initialCelebrities = [
-    { name: 'Elon Musk', photo: 'https://via.placeholder.com/50', content: 'Launching a new rocket tomorrow!' },
-    { name: 'Beyoncé', photo: 'https://via.placeholder.com/50', content: 'New album out now!' },
-    { name: 'Cristiano Ronaldo', photo: 'https://via.placeholder.com/50', content: 'Scored another hat-trick!' }
+    // { name: 'Elon Musk', photo: 'https://via.placeholder.com/50', content: 'Launching a new rocket tomorrow!' },
+    // { name: 'Beyoncé', photo: 'https://via.placeholder.com/50', content: 'New album out now!' },
+    // { name: 'Cristiano Ronaldo', photo: 'https://via.placeholder.com/50', content: 'Scored another hat-trick!' }
+
+        { name: 'Elon Musk', photo: 'https://via.placeholder.com/50', content: 'Launching a new rocket tomorrow!', likes: 0, liked: false },
+        { name: 'Beyoncé', photo: 'https://via.placeholder.com/50', content: 'New album out now!', likes: 0, liked: false },
+        { name: 'Cristiano Ronaldo', photo: 'https://via.placeholder.com/50', content: 'Scored another hat-trick!', likes: 0, liked: false }
+
+    
+
+    
 ];
 
 const followedCelebrities = ['Elon Musk', 'Beyoncé', 'Cristiano Ronaldo', 'Selena Gomez', 'Will Smith'];
@@ -13,24 +21,82 @@ function PostPage() {
     const [dummyCelebrities, setDummyCelebrities] = useState(initialCelebrities);
     const [newPostContent, setNewPostContent] = useState('');
 
+    // const handleCreatePost = () => {
+    //     if (newPostContent.trim()) {
+    //         const newPost = {
+    //             name: 'Ruhan',
+    //             photo: 'https://via.placeholder.com/50',
+    //             content: newPostContent
+    //         };
+
+    //         setDummyCelebrities([newPost, ...dummyCelebrities]);
+    //         setNewPostContent('');
+    //     }
+    // };
+
+
     const handleCreatePost = () => {
         if (newPostContent.trim()) {
             const newPost = {
                 name: 'Ruhan',
                 photo: 'https://via.placeholder.com/50',
-                content: newPostContent
+                content: newPostContent,
+                timestamp: new Date(),
+                likes: 0, 
+                liked: false 
             };
-
+    
             setDummyCelebrities([newPost, ...dummyCelebrities]);
             setNewPostContent('');
         }
     };
 
-    const handleDeletePost = (indexToDelete) => {
-        // Filter out the post to be deleted based on its index
-        const updatedCelebrities = dummyCelebrities.filter((_, index) => index !== indexToDelete);
+    const handleLikePost = (indexToToggle) => {
+        const updatedCelebrities = dummyCelebrities.map((celebrity, index) => {
+            if (index === indexToToggle) {
+                return {
+                    ...celebrity,
+                    likes: celebrity.liked ? celebrity.likes - 1 : celebrity.likes + 1, // Increase or decrease likes
+                    liked: !celebrity.liked // Toggle liked status
+                };
+            }
+            return celebrity;
+        });
         setDummyCelebrities(updatedCelebrities);
     };
+    
+    
+
+    const handleDeletePost = (indexToDelete) => {
+        // Filter out the post to be deleted based on its index
+        // const updatedCelebrities = dummyCelebrities.filter((_, index) => index !== indexToDelete);
+        // setDummyCelebrities(updatedCelebrities);
+
+        // adding confirmation
+        const handleDeletePost = (indexToDelete) => {
+            if (window.confirm("Are you sure you want to delete this post?")) {
+                const updatedCelebrities = dummyCelebrities.filter((_, index) => index !== indexToDelete);
+                setDummyCelebrities(updatedCelebrities);
+            }
+        };
+        
+    };
+
+
+
+
+    const handleFilterNewest = () => {
+        const sorted = [...dummyCelebrities].sort(
+            (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+        );
+        setDummyCelebrities(sorted);
+    };
+    
+    const handleFilterPopular = () => {
+        const sorted = [...dummyCelebrities].sort((a, b) => b.likes - a.likes);
+        setDummyCelebrities(sorted);
+    };
+    
 
     return (
         <div>
@@ -50,8 +116,12 @@ function PostPage() {
 
             {/* Filter bar with buttons */}
             <div className="filter-container">
-                <button className="filter-btn">Newest</button>
-                <button className="filter-btn">Popular</button>
+                {/* <button className="filter-btn">Newest</button>
+                <button className="filter-btn">Popular</button> */}
+
+                <button className="filter-btn" onClick={handleFilterNewest}>Newest</button>
+                <button className="filter-btn" onClick={handleFilterPopular}>Popular</button>
+
                 <button className="filter-btn notification-btn">
                     Following <span className="notification-count">24</span>
                 </button>
@@ -80,6 +150,26 @@ function PostPage() {
                                 </div>
                                 <div className="post-content">{celebrity.content}</div>
                                 
+
+                                {/* displaying time */}
+                                <div className="post-footer">
+                                     <small>{new Date(celebrity.timestamp).toLocaleString()}</small>
+                                </div>
+
+                                {/* handling likes */}
+                                <div className="like-container">
+                                    <button
+                                        className={`like-post-btn ${celebrity.liked ? 'dislike-post-btn' : ''}`}
+                                        onClick={() => handleLikePost(index)}
+                                    >
+                                        {celebrity.liked ? '👎 Dislike' : '👍 Like'} ({celebrity.likes})
+                                    </button>
+                                </div>
+
+
+
+
+                                
                             </div>
                             <button
                                     className="delete-post-btn"
@@ -92,6 +182,7 @@ function PostPage() {
                 </div>
             </div>
         </div>
+        
     );
 }
 
