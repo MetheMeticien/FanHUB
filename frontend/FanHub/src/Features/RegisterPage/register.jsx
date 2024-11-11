@@ -1,14 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './register.css';
 import { useNavigate } from "react-router-dom";
-import logo from '../../assets/logo.png'; 
+import logo from '../../assets/logo.png';
+import axios from "axios"
 
-function RegisterPage() {
+const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const handleRegister = () => {
-    // Navigate to the home page after register
-    navigate('/');
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('');
+  const [gender, setGender] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
+      return;
+    }
+
+    try {
+      console.log(username)
+      console.log(password)
+      const response = await axios.post(
+        'http://127.0.0.1:8000/register', 
+        {
+          username: username,
+          password: password,
+          firstname:firstName,
+          lastname: lastName,
+          gender:gender
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      setMessage(`${response.data.username} created successfully! `);
+      setUsername('');
+      setPassword('');
+      setFirstName('');
+      setLastName('');
+      setConfirmPassword('');
+      setGender('');
+      navigate('/')
+    } catch (error) {
+      setMessage(error.response?.data.detail || 'Registration failed');
+    }
   };
 
   return (
@@ -20,16 +63,51 @@ function RegisterPage() {
         <div className="register-right">
           <h1 className="register-title">Register</h1>
           <div className="register-inputs">
-            <input type="text" placeholder="First Name" className="register-input" />
-            <input type="text" placeholder="Last Name" className="register-input" />
-            <input type="email" placeholder="Email" className="register-input email-input" />
-            <input type="password" placeholder="Password" className="register-input" />
-            <input type="password" placeholder="Re-enter Password" className="register-input" />
+          <input
+              type="text"
+              placeholder="First Name"
+              value={firstName}
+              className='register-input'
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={lastName}
+              className='register-input'
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              className='register-input'
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              className='register-input'
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              className='register-input'
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
           </div>
 
           {/* Gender dropdown */}
           <div className="register-gender-dropdown">
-            <select className="register-input" defaultValue="">
+            <select onChange={(e) => setGender(e.target.value)} className="register-input" defaultValue="">
               <option value="" disabled>Select Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -41,6 +119,10 @@ function RegisterPage() {
 
           {/* Temporary button to bypass register for testing */}
           <button onClick={() => navigate('/news')} className="register-btn">Enter Home</button>
+
+          <div className='message'>
+            <p>{message}</p>
+          </div>
         </div>
       </div>
     </div>
