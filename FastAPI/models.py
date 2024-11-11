@@ -19,7 +19,10 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     is_verified = Column(Boolean, default=False)
 
-    # posts = relationship("Post", back_populates="author")
+    posts = relationship("Post", back_populates="author", cascade="all, delete")
+    comments = relationship("Comment", back_populates="user", cascade="all, delete")
+    reactions = relationship("Reaction", back_populates="user", cascade="all, delete")
+    
     # followers = relationship("Follower", back_populates="user", cascade="all, delete")
 
 User.metadata.create_all(bind=engine)
