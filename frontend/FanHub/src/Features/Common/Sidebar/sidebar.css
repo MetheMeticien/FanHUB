@@ -1,0 +1,64 @@
+/* General Styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding-top: 20px;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+    padding: 20px;
+    padding-top: 60px;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  /* Subtle Toggle Button */
+  .toggle-btn {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 40px;
+  }
+  
+  .bar {
+    width: 30px;
+    height: 4px;
+    background-color: #ff6347;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  
+  .toggle-btn:hover .bar {
+    background-color: #ff836f;
+  }
+  
+  /* Name List */
+  .name-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .name-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #444;
+    cursor: pointer;
+  }
+  
+  .name-item:hover {
+    background-color: #575757;
+  }
+  

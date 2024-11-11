@@ -2,28 +2,35 @@ import React, { useState } from 'react';
 import './LoginPage.css';
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/logo.png'; // Correct import for the logo
+import axios from 'axios';
 
 function LoginPage() {
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [token, setToken] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // console.log("HI")
+    
     try {
-      const response = await api.post("/token", new URLSearchParams({
+      const response = await axios.post('http://127.0.0.1:8000/token', new URLSearchParams({
         username,
         password
-      }));
-      console.log(response)
-      const { access_token } = response.data;
-      localStorage.setItem("access_token", access_token); // Store token in localStorage
-      navigate("/posts"); // Redirect to protected route
-    } catch (err) {
-      setError("Incorrect username or password");
+      }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+
+      localStorage.setItem('token', response.data.access_token);
+
+
+      navigate('/news');
+    } catch (error) {
+      setErrorMessage(error.response?.data.detail || 'Login failed');
     }
   };
 
