@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './App.css';
+import './index.css';
 import Navbar from "./Features/Common/Navbar/Navbar";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import PostPage from './Features/PostPage/PostPage';
