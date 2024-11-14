@@ -3,34 +3,34 @@ from bs4 import BeautifulSoup
 from .Scraper import WebScraper
 from .Scraper import Story
 
-class ESPNScraper(WebScraper):
+class IGN_GameScraper(WebScraper):
     def __init__(self):
-        super().__init__("https://www.espn.in")
+        super().__init__("https://www.ign.com/pc?filter=articles")
     
     def extract_all_stories(self):
         self.fetch_homepage()  
         
         soup = BeautifulSoup(self.homepage_content, 'html.parser')
-        headlines = soup.find_all('a', class_=["contentItem__padding contentItem__padding--border", "contentItem__padding watch-link"])
+        headlines = soup.find_all('a', class_=["item-body"])
 
         for headline in headlines:
             link = headline.get('href')
-            story = self.extract_story(link)
+            img_tag = headline.find('img')
+            if img_tag:
+                thumbnail_link = img_tag['src']
+                high_res_link = thumbnail_link.split('?')[0]
+            else:
+                high_res_link = "No image found"
+            story = self.extract_story(link,high_res_link)
             if(story.headline != "No headline found"):
                 self.stories.append(story)
                 self.celebrity_find(story)
-                # print('*'*20)
-                # print(story.headline)
-                # print('_'*20)
-                # print(story.body) 
-                # print('*'*20)  
-
         
     
-    def extract_story(self, link):
+    def extract_story(self, link,thumbnail_link=None):
         try:
             print("Connecting to webpage...")
-            article_url = f"https://www.espn.in{link}"
+            article_url = f"https://www.ign.com{link}"
             # Set a timeout of 10 seconds (adjustable as needed)
             response = requests.get(article_url, headers=self.headers, timeout=10)
             print("Connection established")
@@ -42,21 +42,19 @@ class ESPNScraper(WebScraper):
             headline_text = headline.get_text(strip=True) if headline else "No headline found"
 
             # Extract the body content
-            article_body = article_soup.find('div', class_='article-body')
+            article_body = article_soup.find('div', class_='jsx-3517015813 article-content page-0')
             if article_body:
                 paragraphs = article_body.find_all('p')
                 body_text = "\n".join([p.get_text(strip=True) for p in paragraphs])
-                
-                img_wrap = article_soup.find('div', class_='img-wrap')
+                img_wrap = article_soup.find('div', class_='jsx-2813394464 article-header-image')
                 if img_wrap:
-                    source_tag = img_wrap.find('source')  # Look for the first source tag within img-wrap
+                    source_tag = img_wrap.find('img') 
                     img_url = source_tag['srcset'].split(',')[0].strip() if source_tag and 'srcset' in source_tag.attrs else "No image found"
                 else:
-                    img_url = "No image found"
-
+                    img_url = thumbnail_link
             else:
                 body_text = "No article body found"
-                img_url = "No image found"
+                img_url = "No image found by default"
 
         except requests.exceptions.Timeout:
             print("Connection timed out")
@@ -75,6 +73,6 @@ class ESPNScraper(WebScraper):
         
         
 
-# espn = ESPNScraper()
-# espn.extract_all_stories()
-# espn.printAll()
+# ign_game = IGN_GameScraper()
+# ign_game.extract_all_stories()
+# ign_game.printAll()

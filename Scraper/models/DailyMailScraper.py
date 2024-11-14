@@ -36,26 +36,38 @@ class DailyMailScraper(WebScraper):
             print("Connecting to webpage...")
             response = requests.get(link, headers=self.headers, timeout=10)
             print("Connection established")
-            
+
             article_soup = BeautifulSoup(response.content, 'html.parser')
+
+            # Extract the headline
             headline = article_soup.find('h1')
             headline_text = headline.get_text(strip=True) if headline else "No headline found"
+
+            # Extract the body content
             paragraphs = article_soup.find_all('p')
             body_text = "\n".join([p.get_text(strip=True) for p in paragraphs]) if paragraphs else "No article body found"
-            
+
+            # Extract the image URL
+            img_wrap = article_soup.find('div', class_='artSplitter mol-img-group')
+            if img_wrap:
+                img_tag = img_wrap.find('img')
+                img_url = img_tag['src'] if img_tag and 'src' in img_tag.attrs else "No image found"
+            else:
+                img_url = "No image found"
+
         except requests.exceptions.Timeout:
             print("Connection timed out")
-            # Return a story with a placeholder headline and body text
             headline_text = "No headline found"
             body_text = "Connection timed out"
-            
+            img_url = "No image found"
+
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
             headline_text = "No headline found"
             body_text = str(e)
+            img_url = "No image found"
 
-        return Story(headline_text, body_text)
-
+        return Story(headline_text, body_text, img_url)
 
 
 # dailymail = DailyMailScraper()
