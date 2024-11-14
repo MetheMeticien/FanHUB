@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './index.css';
 import Navbar from "./Features/Common/Navbar/Navbar";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
@@ -13,7 +12,7 @@ function App() {
   return (
     <>
       <main>
-        //{location.pathname !== '/' && location.pathname !== '/register' && <Navbar />} {/* Render Navbar only if not on LoginPage */}
+        {location.pathname !== '/' && location.pathname !== '/register' && <Navbar />} {/* Render Navbar only if not on LoginPage */}
         <Routes>
           <Route path='/' element={<LoginPage />} />
           <Route path='/news' element={<NewsPage />} />
