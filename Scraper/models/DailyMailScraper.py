@@ -8,7 +8,9 @@ class DailyMailScraper(WebScraper):
         super().__init__("https://www.dailymail.co.uk/tvshowbiz/index.html")
     
     def extract_all_stories(self):
+        print("Trying to make connection")
         self.fetch_homepage()  
+        print("Connection Established")
         
         soup = BeautifulSoup(self.homepage_content, 'html.parser')
         headlines = soup.find_all('a', itemprop="url")
@@ -30,20 +32,28 @@ class DailyMailScraper(WebScraper):
 
     
     def extract_story(self, link):
-        response = requests.get(link, headers=self.headers)
-        article_soup = BeautifulSoup(response.content, 'html.parser')
+        try:
+            print("Connecting to webpage...")
+            response = requests.get(link, headers=self.headers, timeout=10)
+            print("Connection established")
+            
+            article_soup = BeautifulSoup(response.content, 'html.parser')
+            headline = article_soup.find('h1')
+            headline_text = headline.get_text(strip=True) if headline else "No headline found"
+            paragraphs = article_soup.find_all('p')
+            body_text = "\n".join([p.get_text(strip=True) for p in paragraphs]) if paragraphs else "No article body found"
+            
+        except requests.exceptions.Timeout:
+            print("Connection timed out")
+            # Return a story with a placeholder headline and body text
+            headline_text = "No headline found"
+            body_text = "Connection timed out"
+            
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+            headline_text = "No headline found"
+            body_text = str(e)
 
-        # Extracting the headline from the first <h1>
-        headline = article_soup.find('h1')
-        headline_text = headline.get_text(strip=True) if headline else "No headline found"
-        
-        # Extracting the body content from all <p> tags
-        paragraphs = article_soup.find_all('p')
-        if paragraphs:
-            body_text = "\n".join([p.get_text(strip=True) for p in paragraphs])
-        else:
-            body_text = "No article body found"
-        
         return Story(headline_text, body_text)
 
 

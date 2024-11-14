@@ -28,17 +28,37 @@ class SkySportsScraper(WebScraper):
         
     
     def extract_story(self, link):
-        article_url = f"https://www.skysports.com/{link}" 
-        response = requests.get(article_url, headers=self.headers)
-        article_soup = BeautifulSoup(response.content, 'html.parser')
+        try:
+            print("Connecting to webpage...")
+            article_url = f"https://www.skysports.com/{link}" 
+            # Set a timeout of 10 seconds (adjustable as needed)
+            response = requests.get(article_url, headers=self.headers, timeout=10)
+            print("Connection established")
+            
+            article_soup = BeautifulSoup(response.content, 'html.parser')
+            
+            # Extract the headline
+            headline = article_soup.find('span', class_="sdc-article-header__long-title")
+            headline_text = headline.get_text(strip=True) if headline else "No headline found"
+            
+            # Extract the body content
+            article_body = article_soup.find_all('p')
+            body_text = "\n".join([p.get_text(strip=True) for p in article_body]) if article_body else "No article body found"
+            
+        except requests.exceptions.Timeout:
+            print("Connection timed out")
+            # Return a story with a placeholder headline and body text
+            headline_text = "No headline found"
+            body_text = "Connection timed out"
+            
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+            # Return a story with a placeholder headline and body text for any other request errors
+            headline_text = "No headline found"
+            body_text = str(e)
 
-        headline = article_soup.find('span', class_="sdc-article-header__long-title")
-        headline_text = headline.get_text(strip=True) if headline else "No headline found"
-
-        article_body = article_soup.find_all('p')
-        body_text = "\n".join([p.get_text(strip=True) for p in article_body]) if article_body else "No article body found"
-        
         return Story(headline_text, body_text)
+
         
         
 
