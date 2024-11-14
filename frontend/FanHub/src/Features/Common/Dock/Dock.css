@@ -1,0 +1,40 @@
+.dock {
+  position: fixed;
+  bottom: 30px; /* Position above the bottom */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  background-color: rgba(128, 128, 128, 0.9); /* Gray background with 80% opacity */
+  padding: 10px;
+  border-radius: 50px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+
+.dock-btn {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dock-btn:hover {
+  transform: scale(1.1); /* Slightly increase size on hover */
+}
+
+.dock-btn.active {
+  background-color: #b71631;
+  color: white;
+  transform: scale(1.5);
+}
+
+.dock-btn:not(.active) {
+  background-color: lightgray;
+}

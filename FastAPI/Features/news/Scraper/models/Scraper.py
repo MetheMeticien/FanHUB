@@ -6,11 +6,12 @@ from typing import Optional
 
 
 class Story:
-    def __init__(self, headline, story):
+    def __init__(self, headline, story, medialink=None):
         self.headline = headline
         self.body = story
         self.celeb_tags = []
         self.date_time = datetime.date.today()
+        self.medialink = medialink
         
     def to_news_create(self, author: str, category: str, imageUrl: Optional[str] = None):
         return NewsCreate(
@@ -18,7 +19,7 @@ class Story:
             content=self.body,
             author=author,
             category=category,
-            imageUrl=imageUrl,
+            imageUrl=self.medialink,
             celeb_tags=', '.join(self.celeb_tags) if self.celeb_tags else None
         )
     
