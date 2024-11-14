@@ -46,6 +46,14 @@ class ESPNScraper(WebScraper):
             if article_body:
                 paragraphs = article_body.find_all('p')
                 body_text = "\n".join([p.get_text(strip=True) for p in paragraphs])
+                
+                img_wrap = article_soup.find('div', class_='img-wrap')
+                if img_wrap:
+                    source_tag = img_wrap.find('source')  # Look for the first source tag within img-wrap
+                    img_url = source_tag['srcset'].split(',')[0].strip() if source_tag and 'srcset' in source_tag.attrs else "No image found"
+                else:
+                    img_url = "No image found"
+
             else:
                 body_text = "No article body found"
 
@@ -61,7 +69,7 @@ class ESPNScraper(WebScraper):
             headline_text = "No headline found"
             body_text = str(e)
 
-        return Story(headline_text, body_text)
+        return Story(headline_text, body_text,img_url)
 
         
         

@@ -4,15 +4,17 @@ import datetime
 
 
 class Story:
-    def __init__(self, headline, story):
+    def __init__(self, headline, story, medialink=None):
         self.headline = headline
         self.body = story
         self.celeb_tags = []
         self.date_time = datetime.date.today()
-    
+        self.medialink = medialink
+        
+        print(medialink)
+        
     def printStory(self):
         print(self.headline)
-
 
 
 class WebScraper:
