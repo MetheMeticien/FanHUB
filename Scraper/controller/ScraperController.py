@@ -30,9 +30,5 @@ class ScraperController:
                 if story.date_time == date:
                     story.printStory()
 
-
 sc = ScraperController()
-print("Finding Story on Lebron James")
-sc.scrape_celeb_with_date("LeBron James", date=datetime.date.today())
-print("Finding Stories from today!")
-sc.scrape_with_date(datetime.date.today())
+sc.scrape_all()

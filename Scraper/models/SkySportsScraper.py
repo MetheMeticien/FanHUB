@@ -11,11 +11,30 @@ class SkySportsScraper(WebScraper):
         self.fetch_homepage()  
         
         soup = BeautifulSoup(self.homepage_content, 'html.parser')
-        headlines = soup.find_all('a', class_="sdc-site-tile__headline-link")
+        headlines = soup.find_all('div', class_="sdc-site-tiles__item")
 
-        for headline in headlines:
-            link = headline.get('href')
-            story = self.extract_story(link)
+        for item in headlines:
+            # Find the headline link within each tile
+            headline_link = item.find('a', class_="sdc-site-tile__headline-link")
+            if headline_link:
+                link = headline_link.get('href')
+            else:
+                link = "No headline link found"
+            
+            # Find the image within the nested div structure for the thumbnail
+            img_wrap = item.find('div', class_="sdc-site-tile__image-wrap")
+            if img_wrap:
+                img_tag = img_wrap.find('img', class_="sdc-site-tile__image")
+                if img_tag:
+                    thumbnail_link = img_tag.get('src', "No image found")
+                else:
+                    thumbnail_link = "No image found"
+            else:
+                thumbnail_link = "No image found"
+            
+            # Now pass both the link and thumbnail link to extract_story
+            story = self.extract_story(link, thumbnail_link)
+
             if(story.headline != "No headline found"):
                 self.stories.append(story)
                 self.celebrity_find(story)
@@ -27,7 +46,7 @@ class SkySportsScraper(WebScraper):
 
         
     
-    def extract_story(self, link):
+    def extract_story(self, link,thumbnail_link=None):
         try:
             print("Connecting to webpage...")
             article_url = f"https://www.skysports.com/{link}" 
@@ -57,10 +76,7 @@ class SkySportsScraper(WebScraper):
             headline_text = "No headline found"
             body_text = str(e)
 
-        return Story(headline_text, body_text)
-
-        
-        
+        return Story(headline_text, body_text,thumbnail_link)        
 
 # ssp = SkySportsScraper()
 # ssp.extract_all_stories()
