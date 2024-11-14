@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from Scraper import WebScraper
-from Scraper import Story
+from .Scraper import WebScraper
+from .Scraper import Story
 
 class ESPNScraper(WebScraper):
     def __init__(self):
@@ -46,6 +46,6 @@ class ESPNScraper(WebScraper):
         
         
 
-espn = ESPNScraper()
-espn.extract_all_stories()
-espn.printAll()
+# espn = ESPNScraper()
+# espn.extract_all_stories()
+# espn.printAll()

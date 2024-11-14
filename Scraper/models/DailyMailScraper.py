@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from Scraper import WebScraper
-from Scraper import Story
+from .Scraper import WebScraper
+from .Scraper import Story
 
 class DailyMailScraper(WebScraper):
     def __init__(self):
@@ -48,6 +48,6 @@ class DailyMailScraper(WebScraper):
 
 
 
-dailymail = DailyMailScraper()
-dailymail.extract_all_stories()
-dailymail.printAll()
+# dailymail = DailyMailScraper()
+# dailymail.extract_all_stories()
+# dailymail.printAll()

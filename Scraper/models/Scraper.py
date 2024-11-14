@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-
+import datetime
 
 
 class Story:
@@ -8,6 +8,11 @@ class Story:
         self.headline = headline
         self.body = story
         self.celeb_tags = []
+        self.date_time = datetime.date.today()
+    
+    def printStory(self):
+        print(self.headline)
+
 
 
 class WebScraper:
@@ -50,8 +55,45 @@ class WebScraper:
             "Salima Tete",
             "Varun",
             "Christopher Nkunku",
-            "Salima Tete"
+            "Tulisa",
+            "Coleen Rooney",
+            "Ant McPartlin",
+            "Wilder McPartlin",
+            "David Beckham",
+            "Connie Nielsen",
+            "Andrew Scott",
+            "Paul Mescal",
+            "Maura Higgins",
+            "Pete Wicks",
+            "Gigi Hadid",
+            "A$AP Rocky",
+            "Rihanna",
+            "Eamonn Holmes",
+            "Lottie Moss",
+            "Olivia Rodrigo",
+            "Gemma Collins",
+            "Meghan Markle",
+            "Victoria Beckham",
+            "Cruz Beckham",
+            "David Coote",
+            "Harry Kane",
+            "Rory McIlroy",
+            "Katie Taylor",
+            "Mike Tyson",
+            "Diego Forlan",
+            "Charles Leclerc",
+            "Carlos Sainz",
+            "Sonia Bompastor",
+            "Danny Cipriani",
+            "Rob Cross",
+            "Nelly Korda",
+            "Rúben Amorim",
+            "LeBron James",
+            "Tilak",
+            "Arshdeep",
+            "Alaeddine"
         ]
+
     
     def fetch_homepage(self):
         try:

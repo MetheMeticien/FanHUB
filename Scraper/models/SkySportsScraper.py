@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from Scraper import WebScraper
-from Scraper import Story
+from .Scraper import WebScraper
+from .Scraper import Story
 
 class SkySportsScraper(WebScraper):
     def __init__(self):
@@ -42,6 +42,6 @@ class SkySportsScraper(WebScraper):
         
         
 
-ssp = SkySportsScraper()
-ssp.extract_all_stories()
-ssp.printAll()
+# ssp = SkySportsScraper()
+# ssp.extract_all_stories()
+# ssp.printAll()
