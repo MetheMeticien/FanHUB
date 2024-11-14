@@ -13,8 +13,22 @@
     "@chakra-ui/react": "^3.1.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@fontsource/roboto": "^5.1.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
+<<<<<<< HEAD
+    "@mui/icons-material": "^6.1.7",
+    "@mui/material": "^6.1.7",
+    "@mui/styled-engine-sc": "^6.1.7",
+    "@nodelib/fs.scandir": "^3.0.0",
+    "@tabler/icons-react": "^3.22.0",
+    "aceternity-ui": "^0.2.2",
+    "axios": "^1.7.7",
+    "clsx": "^2.1.1",
+    "fastq": "^1.17.1",
+    "framer-motion": "^11.11.17",
+    "jwt-decode": "^4.0.0",
+=======
     "@nodelib/fs.scandir": "^3.0.0",
     "@tabler/icons-react": "^3.22.0",
     "axios": "^1.7.7",
@@ -22,11 +36,13 @@
     "framer-motion": "^11.11.15",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.456.0",
+>>>>>>> 42171b6c1cbb9bed83eeede85bfc5656246aa00b
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-fontawesome": "^1.7.1",
     "react-icons": "^5.3.0",
     "react-router-dom": "^6.26.2",
+    "styled-components": "^6.1.13",
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {

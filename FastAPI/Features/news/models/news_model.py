@@ -14,6 +14,7 @@ class News(Base):
     published_at = Column(DateTime, default=datetime.utcnow)
     category = Column(String, index=True, nullable=False) 
     imageUrl = Column(String, nullable=True) 
+    celeb_tags = Column(String, nullable=True) 
 
 
 News.metadata.create_all(bind=engine)

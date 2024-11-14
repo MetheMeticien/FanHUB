@@ -8,6 +8,7 @@ class NewsBase(BaseModel):
     author: str
     category: str  
     imageUrl: Optional[str] = None
+    celeb_tags: Optional[str] = None
 
 class NewsCreate(NewsBase):
     pass
@@ -18,6 +19,7 @@ class NewsUpdate(BaseModel):
     author: Optional[str] = None
     category: Optional[str] = None  
     imageUrl: Optional[str] = None
+    celeb_tags: Optional[str] = None
 
 class NewsOut(NewsBase):
     id: int
