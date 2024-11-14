@@ -3,7 +3,6 @@ import { FaThumbsUp, FaCommentAlt, FaTrash } from 'react-icons/fa';
 import './PostCard.css';
 
 const PostCard = ({
-    imageSrc,
     text,
     name,
     profilePic,
@@ -15,7 +14,10 @@ const PostCard = ({
     onDelete,
     onExpand,
     expanded,
-    onAddComment
+    onAddComment,
+    mediaType, // New prop to determine media type (image or video)
+    mediaUrl,  // New prop to hold the media URL
+    isUserPost // New prop to check if this is the user's post
 }) => {
     const handleCommentSubmit = (e) => {
         if (e.key === 'Enter' && e.target.value.trim()) {
@@ -42,9 +44,26 @@ const PostCard = ({
                 <div className="post-description">
                     <p>{text}</p>
                 </div>
-                {imageSrc && (
-                    <div className="post-image-wrapper">
-                        <img src={imageSrc} alt="Post visual content" className="post-image" />
+
+                {/* Conditionally render the media content (image or video) */}
+                {mediaType === 'image' && mediaUrl && (
+                    <div className="post-media-wrapper">
+                        <img
+                            src={mediaUrl}
+                            alt="Post visual content"
+                            className="post-media"
+                        />
+                    </div>
+                )}
+                {mediaType === 'video' && mediaUrl && (
+                    <div className="post-media-wrapper">
+                        <video
+                            controls
+                            className="post-media"
+                        >
+                            <source src={mediaUrl} type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 )}
             </div>
@@ -55,11 +74,13 @@ const PostCard = ({
                     <FaThumbsUp /> {liked ? 'Dislike' : 'Like'} ({likes})
                 </button>
                 <button className="comment-button" onClick={onExpand}>
-                    <FaCommentAlt /> Comment ({comments.length}) {/* Display the number of comments */}
+                    <FaCommentAlt /> Comment ({comments.length})
                 </button>
-                <button className="delete-button" onClick={onDelete}>
-                    <FaTrash /> Delete
-                </button>
+                {isUserPost && ( // Only show delete button for the logged-in user's posts
+                    <button className="delete-button" onClick={onDelete}>
+                        <FaTrash /> Delete
+                    </button>
+                )}
             </div>
 
             {/* Expanded Content: Comments */}
@@ -68,14 +89,16 @@ const PostCard = ({
                     <h4>Comments</h4>
                     <ul className="comment-list">
                         {comments.map((comment, idx) => (
-                            <li key={idx}>{comment}</li> 
+                            <li key={idx}>
+                                <strong>{comment.username}</strong>: {comment.text}
+                            </li>
                         ))}
                     </ul>
                     <input
                         type="text"
-                        placeholder="Add a comment..."
                         className="comment-input"
-                        onKeyDown={handleCommentSubmit} // Handle comment submission
+                        placeholder="Add a comment..."
+                        onKeyDown={handleCommentSubmit}
                     />
                 </div>
             )}

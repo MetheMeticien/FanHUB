@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './newspage.css';
+import Dock from '../Common/Dock/Dock'; // Import Dock component
 
 const NewsPage = () => {
   const [news, setNews] = useState([]);
@@ -75,8 +76,6 @@ const NewsPage = () => {
 
       {/* Right Pane: News Articles */}
       <div className="right-pane">
-        {/* Toggle between Grid and List View */}
-        
 
         {/* News Grid/List */}
         <div className={`news-grid ${viewMode}-view`}>
@@ -88,6 +87,9 @@ const NewsPage = () => {
           ))}
         </div>
       </div>
+      
+      {/* Floating Dock with buttons */}
+      <Dock />
     </div>
   );
 };

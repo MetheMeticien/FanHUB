@@ -1,31 +1,51 @@
 import React from "react";
 import './navbar.css';
-import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";  // Importing useNavigate for navigation
+import { FaSearch } from "react-icons/fa"; // Importing the search icon from react-icons
 
 function Navbar() {
-    const location = useLocation(); // Get current route
+    const navigate = useNavigate(); // Hook for navigation
+
+    // Function to navigate to Profile page
+    const handleLogoClick = () => {
+        navigate('/profile'); // Redirect to the profile page
+    };
+
+    // Function to navigate to News page
+    const handleNewsLogoClick = () => {
+        navigate('/news'); // Redirect to the news page
+    };
 
     return (
         <div className="navbar">
             <div className="nav-left">
-                <img src="/src/assets/logo.png" alt="Logo" />
+                <img 
+                    src="/src/assets/logo.png" 
+                    alt="FanHub Logo" 
+                    onClick={handleNewsLogoClick} // Add click handler to navigate to the news page
+                    style={{ cursor: 'pointer' }} // Make it clear it's clickable
+                />
             </div>
             <div className="nav-mid">
-                <ul>
-                    <li className={location.pathname === '/news' ? 'active' : ''}>
-                        <Link to="/news">
-                            <img src="/src/assets/news.png" alt="news-icon" />
-                        </Link>
-                    </li>
-                    <li className={location.pathname === '/posts' ? 'active' : ''}>
-                        <Link to="/posts">
-                            <img src="/src/assets/posts.png" alt="posts-icon" />
-                        </Link>
-                    </li>
-                </ul>
+                {/* Search Container */}
+                <div className="search-container">
+                    <input 
+                        type="text" 
+                        placeholder="Search..." 
+                        className="search-bar"
+                    />
+                    <button className="search-button">
+                        <FaSearch /> {/* Using the FaSearch icon here */}
+                    </button>
+                </div>
             </div>
             <div className="nav-right">
-                <img src="/src/assets/ruhan.jpg" alt="profile-pic" />
+                <img 
+                    src="/src/assets/ruhan.jpg" 
+                    alt="profile-pic" 
+                    onClick={handleLogoClick} // Add click handler to navigate to the profile page
+                    style={{ cursor: 'pointer' }} // Make it clear it's clickable
+                />
             </div>
         </div>
     );

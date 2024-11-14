@@ -6,8 +6,8 @@ body, * {
 /* Two-pane layout */
 .news-page-container {
   display: grid;
-  grid-template-columns: 210px 1fr;
-  grid-gap: 20px; /* Space between the left and right panes */
+  grid-template-columns: 270px 1fr;
+  grid-gap: 60px; /* Space between the left and right panes */
   padding: 20px;
 }
 
@@ -16,11 +16,14 @@ body, * {
   background-color: #f7f7f7;
   padding: 20px;
   border-radius: 10px;
+  margin-left: 60px;
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
 .left-pane ul {
   list-style-type: none;
-  padding: 30px;
+  padding: 10px;
+  margin-top: 70px;
 }
 
 .left-pane ul li {
