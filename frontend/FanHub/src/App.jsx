@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import './App.css';
+import './index.css';
 import Navbar from "./Features/Common/Navbar/Navbar";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import PostPage from './Features/PostPage/PostPage';
@@ -14,23 +13,13 @@ function App() {
   return (
     <>
       <main>
-        {location.pathname !== '/' && location.pathname !== '/register' && <Navbar />}
-
-   
-          <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-
-
-            <Route element={<PrivateRoute />} >
-              <Route path="/news" element={<NewsPage />} />
-              <Route path="/posts" element={<PostPage />} />
-
-            </Route>
-          </Routes>
-
-    
+        {location.pathname !== '/' && location.pathname !== '/register' && <Navbar />} {/* Render Navbar only if not on LoginPage */}
+        <Routes>
+          <Route path='/' element={<LoginPage />} />
+          <Route path='/news' element={<NewsPage />} />
+          <Route path='/posts' element={<PostPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
       </main>
     </>
   );

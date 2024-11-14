@@ -10,30 +10,19 @@ const NewsPage = () => {
   const [celebrities, setCelebrities] = useState([]);
 
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:5000/api/news');
-        if (!response.ok) {
-          throw new Error('Failed to fetch news');
-        }
-        const data = await response.json();
-        setNews(data);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    };
+    // Dummy news data
+    const dummyNews = [
+      { title: 'Celebrity A hits new record', content: 'Celebrity A has achieved a major milestone in their career...', celebrity: 'Celebrity A' },
+      { title: 'Celebrity B announces new project', content: 'Celebrity B is excited to announce their upcoming project...', celebrity: 'Celebrity B' },
+      { title: 'Celebrity C wins an award', content: 'Celebrity C has been awarded the Best Actor award for their role in...', celebrity: 'Celebrity C' },
+    ];
 
-    const fetchCelebrities = async () => {
-      // Assuming your backend provides a list of celebrities
-      const response = await fetch('http://127.0.0.1:5000/api/celebrities');
-      const data = await response.json();
-      setCelebrities(data);
-    };
+    // Dummy celebrity data
+    const dummyCelebrities = ['Celebrity A', 'Celebrity B', 'Celebrity C'];
 
-    fetchNews();
-    fetchCelebrities();
+    setNews(dummyNews);
+    setCelebrities(dummyCelebrities);
+    setLoading(false);
   }, []);
 
   const handleFilterChange = (celebrity) => {
@@ -70,7 +59,7 @@ const NewsPage = () => {
             className={filter === 'All Following' ? 'active' : ''} 
             onClick={() => handleFilterChange('All Following')}
           >
-            All Following
+            All
           </li>
           {celebrities.map((celebrity) => (
             <li
@@ -87,9 +76,7 @@ const NewsPage = () => {
       {/* Right Pane: News Articles */}
       <div className="right-pane">
         {/* Toggle between Grid and List View */}
-        <button onClick={toggleViewMode}>
-          Switch to {viewMode === 'grid' ? 'List' : 'Grid'} View
-        </button>
+        
 
         {/* News Grid/List */}
         <div className={`news-grid ${viewMode}-view`}>
