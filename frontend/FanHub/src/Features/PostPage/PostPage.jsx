@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './PostPage.css';
-import Sidebar from '../Common/Sidebar/Sidebar';
+import PostCard from './PostCard';
+import { FaClock, FaStar, FaPlus } from 'react-icons/fa';
 
 const initialCelebrities = [
-    { name: 'Elon Musk', photo: null, content: 'Launching a new rocket tomorrow!' },
-    { name: 'Beyoncé', photo: null, content: 'New album out now!' },
-    { name: 'Cristiano Ronaldo', photo: null, content: 'Scored another hat-trick!' }
+    { name: 'Elon Musk', photo: 'https://via.placeholder.com/50', content: 'Launching a new rocket tomorrow!', likes: 0, liked: false, comments: [] },
+    { name: 'Beyoncé', photo: 'https://via.placeholder.com/50', content: 'New album out now!', likes: 0, liked: false, comments: [] },
+    { name: 'Cristiano Ronaldo', photo: 'https://via.placeholder.com/50', content: 'Scored another hat-trick!', likes: 0, liked: false, comments: [] }
 ];
 
 const followedCelebrities = ['Elon Musk', 'Beyoncé', 'Cristiano Ronaldo', 'Selena Gomez', 'Will Smith'];
@@ -13,35 +14,70 @@ const followedCelebrities = ['Elon Musk', 'Beyoncé', 'Cristiano Ronaldo', 'Sele
 function PostPage() {
     const [dummyCelebrities, setDummyCelebrities] = useState(initialCelebrities);
     const [newPostContent, setNewPostContent] = useState('');
-    const [newPostImage, setNewPostImage] = useState(null);
-
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setNewPostImage(reader.result); // Store image as base64
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+    const [expandedPostIndex, setExpandedPostIndex] = useState(null);
+    const [showCreatePostCard, setShowCreatePostCard] = useState(false);
 
     const handleCreatePost = () => {
         if (newPostContent.trim()) {
             const newPost = {
                 name: 'Ruhan',
-                photo: newPostImage, // Attach the uploaded image
-                content: newPostContent
+                photo: 'https://via.placeholder.com/50',
+                content: newPostContent,
+                timestamp: new Date(),
+                likes: 0, 
+                liked: false,
+                comments: []
             };
-
             setDummyCelebrities([newPost, ...dummyCelebrities]);
             setNewPostContent('');
-            setNewPostImage(null); // Reset the image after posting
         }
     };
 
+    const handleLikePost = (indexToToggle) => {
+        const updatedCelebrities = dummyCelebrities.map((celebrity, index) => {
+            if (index === indexToToggle) {
+                return {
+                    ...celebrity,
+                    likes: celebrity.liked ? celebrity.likes - 1 : celebrity.likes + 1,
+                    liked: !celebrity.liked
+                };
+            }
+            return celebrity;
+        });
+        setDummyCelebrities(updatedCelebrities);
+    };
+
     const handleDeletePost = (indexToDelete) => {
-        const updatedCelebrities = dummyCelebrities.filter((_, index) => index !== indexToDelete);
+        if (window.confirm("Are you sure you want to delete this post?")) {
+            const updatedCelebrities = dummyCelebrities.filter((_, index) => index !== indexToDelete);
+            setDummyCelebrities(updatedCelebrities);
+        }
+    };
+
+    const handleFilterNewest = () => {
+        const sorted = [...dummyCelebrities].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        setDummyCelebrities(sorted);
+    };
+    
+    const handleFilterPopular = () => {
+        const sorted = [...dummyCelebrities].sort((a, b) => b.likes - a.likes);
+        setDummyCelebrities(sorted);
+    };
+
+    const toggleExpandPost = (index) => {
+        setExpandedPostIndex(index === expandedPostIndex ? null : index);
+    };
+
+    const handleAddComment = (index, comment) => {
+        const updatedCelebrities = dummyCelebrities.map((celebrity, idx) => {
+            if (idx === index) {
+                return {
+                    ...celebrity,
+                    comments: [...celebrity.comments, comment]
+                };
+            }
+            return celebrity;
+        });
         setDummyCelebrities(updatedCelebrities);
     };
 
@@ -51,83 +87,54 @@ function PostPage() {
     };
 
     return (
-        
-        <div>
-            <Sidebar/>
-            {/* Post creation bar */}
-            <div className="postbar-container">
-                <textarea
-                    placeholder="Let’s share what’s going on..."
-                    className="post-textarea"
-                    value={newPostContent}
-                    onChange={(e) => setNewPostContent(e.target.value)}
-                    rows="4" /* Allows for multiline input */
-                />
-                <div className='upload-buttons'>
-                    {/* Hidden file input for image upload */}
-                    <input
-                        type="file"
-                        id="image-input"
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        onChange={handleImageUpload}
-                    />
-                    <button className="image-upload-btn" onClick={triggerFileInput}>
-                        Image
-                    </button>
-                    <button className="create-post-btn" onClick={handleCreatePost}>
-                        Post
-                    </button>
-                </div>
+        <div className="post-page-container">
+            {/* Left Pane: Celebrities List */}
+            <div className="left-pane">
+                <h3>Celebrity I Follow</h3>
+                <ul className="celebrity-list">
+                    {followedCelebrities.map((celebrity, index) => (
+                        <li key={index}>{celebrity}</li>
+                    ))}
+                </ul>
             </div>
 
-            {/* Filter bar with buttons */}
-            <div className="filter-container">
-                <button className="filter-btn">Newest</button>
-                <button className="filter-btn">Popular</button>
-                <button className="filter-btn notification-btn">
-                    Following <span className="notification-count">24</span>
+            {/* Right Pane: Post Section */}
+            <div className="right-pane">
+                {/* Floating Create Post Button */}
+                <button className="create-post-float-btn" onClick={() => NULL}>
+                    <FaPlus />
                 </button>
-            </div>
 
-            {/* Main layout for sidebar and posts */}
-            <div className="main-layout">
-                {/* Left sidebar for celebrities I follow */}
-                <div className="celebrity-sidebar">
-                    <h3>Celebrity I Follow</h3>
-                    <ul className="celebrity-list">
-                        {followedCelebrities.map((celebrity, index) => (
-                            <li key={index}>{celebrity}</li>
-                        ))}
-                    </ul>
+                {/* Filter buttons moved above the posts */}
+                <div className="postbar-container">
+                    <div className="filter-buttons">
+                        <button className="filter-btn" onClick={handleFilterNewest}>
+                            <FaClock /> Newest
+                        </button>
+                        <button className="filter-btn" onClick={handleFilterPopular}>
+                            <FaStar /> Popular
+                        </button>
+                    </div>
                 </div>
 
-                {/* Right section for posts */}
                 <div className="post-section">
                     {dummyCelebrities.map((celebrity, index) => (
-                        <div key={index} className="post-container">
-                            <div className='post-header-content'>
-                                <div className="post-header">
-                                    <img src={celebrity.photo || 'https://via.placeholder.com/50'} alt={`${celebrity.name}'s profile`} />
-                                    <div className="username">{celebrity.name}</div>
-                                </div>
-                                <div className="post-content">{celebrity.content.split('\n').map((line, i) => (
-                                    <p key={i}>{line}</p>
-                                ))}</div> {/* Handles new lines */}
-                                {celebrity.photo && (
-                                    <div className="post-image">
-                                        <img src={celebrity.photo} alt="Uploaded" className="uploaded-image" />
-                                    </div>
-                                )}
-                                
-                            </div>
-                            <button
-                                className="delete-post-btn"
-                                onClick={() => handleDeletePost(index)}
-                            >
-                                Delete Post
-                            </button>
-                        </div>
+                        <PostCard
+                            key={index}
+                            name={celebrity.name}
+                            timestamp={celebrity.timestamp}
+                            imageSrc={celebrity.photo}
+                            text={celebrity.content}
+                            likes={celebrity.likes}
+                            comments={celebrity.comments}
+                            shares={0} 
+                            liked={celebrity.liked}
+                            onLike={() => handleLikePost(index)}
+                            onDelete={() => handleDeletePost(index)}
+                            onExpand={() => toggleExpandPost(index)}
+                            expanded={expandedPostIndex === index}
+                            onAddComment={(comment) => handleAddComment(index, comment)}
+                        />
                     ))}
                 </div>
             </div>
