@@ -1,7 +1,7 @@
 .post-card {
     position: static;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 25px;  /* Slightly larger padding for comfort */
     margin: 12px 0;  /* Slightly larger margin for spacing */
     background-color: #fff;
@@ -83,8 +83,9 @@
     border-radius: 8px;
 }
 
-/* Show image wrapper only when an image is available */
-.post-card-body img {
+/* Ensure the image or video only displays when it exists and loads */
+.post-card-body img,
+.post-card-body video {
     display: block;
 }
 
@@ -107,6 +108,10 @@
 
 .like-button.liked {
     color: #007bff;
+}
+
+.button-text {
+    margin-left: 5px;  /* Adjust spacing as needed */
 }
 
 .expanded-comments {

@@ -54,7 +54,7 @@ const NewsPage = () => {
     <div className="news-page-container">
       {/* Left Pane: List of Celebrities */}
       <div className="left-pane">
-        <h3>Following</h3>
+        <h3>Celebrity I Follow</h3>
         <ul>
           <li 
             className={filter === 'All Following' ? 'active' : ''} 

@@ -1,3 +1,5 @@
+// PostPage.js
+
 import React, { useState } from 'react';
 import './PostPage.css';
 import PostCard from './PostCard';
@@ -52,7 +54,9 @@ const followedCelebrities = [
     { name: 'Cristiano Ronaldo', id: 'ronaldo' }
 ];
 
-function PostPage() {
+const PostPage = () => {
+    const loggedInUser = 'Ruhan';  // Assume "Ruhan" is the logged-in user
+
     const [posts, setPosts] = useState(initialPosts);
     const [selectedCelebrityId, setSelectedCelebrityId] = useState('');  // Track selected celebrity
     const [newPostContent, setNewPostContent] = useState('');
@@ -63,10 +67,10 @@ function PostPage() {
         if (newPostContent.trim()) {
             const newPost = {
                 postId: `post${posts.length + 1}`, // Incremental post ID
-                fanName: 'Ruhan',
+                fanName: loggedInUser,
                 fanPhoto: 'https://via.placeholder.com/50',
                 content: newPostContent,
-                celebrityId: 'elon', // The post can be about a specific celebrity
+                celebrityId: 'elon',
                 timestamp: new Date(),
                 likes: 0,
                 liked: false,
@@ -132,16 +136,32 @@ function PostPage() {
         ? posts.filter(post => post.celebrityId === selectedCelebrityId)
         : posts;
 
+    // Handle selecting a celebrity or "All"
+    const handleCelebritySelect = (celebrityId) => {
+        if (celebrityId === 'all') {
+            setSelectedCelebrityId('');  // Show all posts
+        } else {
+            setSelectedCelebrityId(celebrityId);
+        }
+    };
+
     return (
         <div className="post-page-container">
-            {/* Left Pane: Celebrities List */}
+            {/* Left Pane: Celebrities List with "All" option */}
             <div className="left-pane">
                 <h3>Celebrity I Follow</h3>
                 <ul className="celebrity-list">
+                    <li 
+                        onClick={() => handleCelebritySelect('all')}
+                        style={{ fontWeight: selectedCelebrityId === '' ? 'bold' : 'normal' }}
+                    >
+                        All
+                    </li>
                     {followedCelebrities.map((celebrity) => (
                         <li 
                             key={celebrity.id} 
-                            onClick={() => setSelectedCelebrityId(celebrity.id)}
+                            onClick={() => handleCelebritySelect(celebrity.id)}
+                            style={{ fontWeight: selectedCelebrityId === celebrity.id ? 'bold' : 'normal' }}
                         >
                             {celebrity.name}
                         </li>
@@ -169,6 +189,7 @@ function PostPage() {
                             onExpand={() => toggleExpandPost(index)}
                             expanded={expandedPostIndex === index}
                             onAddComment={(comment) => handleAddComment(index, comment)}
+                            isUserPost={post.fanName === loggedInUser}
                         />
                     ))}
                 </div>

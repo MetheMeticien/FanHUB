@@ -33,7 +33,7 @@ body, * {
 
 .left-pane ul li.active {
   font-weight: bold;
-  color: #b71631;
+  color: #000000;
 }
 
 /* Right pane: News */

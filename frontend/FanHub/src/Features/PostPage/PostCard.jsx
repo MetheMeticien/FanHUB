@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaThumbsUp, FaCommentAlt, FaTrash } from 'react-icons/fa';
 import './PostCard.css';
 
 const PostCard = ({
-    text,
-    name,
-    profilePic,
+    fanName,
+    fanPhoto,
+    content,
     timestamp,
+    mediaType,
+    imageSrc,
     likes,
     comments,
     liked,
@@ -15,90 +17,94 @@ const PostCard = ({
     onExpand,
     expanded,
     onAddComment,
-    mediaType, // New prop to determine media type (image or video)
-    mediaUrl,  // New prop to hold the media URL
-    isUserPost // New prop to check if this is the user's post
+    isUserPost
 }) => {
+    const [mediaLoaded, setMediaLoaded] = useState(true); // Track media load state
+
     const handleCommentSubmit = (e) => {
         if (e.key === 'Enter' && e.target.value.trim()) {
-            onAddComment(e.target.value.trim());
+            onAddComment({ username: fanName, text: e.target.value.trim() });
             e.target.value = '';
         }
     };
 
+    const handleMediaError = () => {
+        setMediaLoaded(false); // Set to false if media fails to load
+    };
+
     return (
         <div className="post-card">
-            {/* Post Header */}
+            {/* Header Section */}
             <div className="post-card-header">
-                <img src={profilePic} alt={`${name}'s profile`} className="profile-pic" />
+                <img src={fanPhoto} alt={`${fanName}'s profile`} className="profile-pic" />
                 <div className="post-info">
-                    <div className="post-user-name">{name || 'Unknown User'}</div>
-                    <small className="post-timestamp">
-                        {timestamp ? new Date(timestamp).toLocaleString() : 'No Date'}
-                    </small>
+                    <div className="post-user-name">{fanName}</div>
+                    <small className="post-timestamp">{new Date(timestamp).toLocaleString()}</small>
                 </div>
             </div>
 
-            {/* Post Content */}
+            {/* Body Section */}
             <div className="post-card-body">
-                <div className="post-description">
-                    <p>{text}</p>
-                </div>
-
-                {/* Conditionally render the media content (image or video) */}
-                {mediaType === 'image' && mediaUrl && (
+                <p className="post-description">{content}</p>
+                {mediaLoaded && imageSrc && mediaType === 'image' && (
                     <div className="post-media-wrapper">
-                        <img
-                            src={mediaUrl}
-                            alt="Post visual content"
+                        <img 
+                            src={imageSrc} 
+                            alt="Post content" 
                             className="post-media"
+                            onError={handleMediaError} // Hide if image fails to load
                         />
                     </div>
                 )}
-                {mediaType === 'video' && mediaUrl && (
+                {mediaLoaded && mediaType === 'video' && imageSrc && (
                     <div className="post-media-wrapper">
-                        <video
-                            controls
+                        <video 
+                            controls 
+                            src={imageSrc} 
                             className="post-media"
-                        >
-                            <source src={mediaUrl} type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
+                            onError={handleMediaError} // Hide if video fails to load
+                        ></video>
                     </div>
                 )}
             </div>
 
-            {/* Post Actions */}
+            {/* Footer Section */}
             <div className="post-actions">
-                <button className={`like-button ${liked ? 'liked' : ''}`} onClick={onLike}>
-                    <FaThumbsUp /> {liked ? 'Dislike' : 'Like'} ({likes})
+                <button 
+                    className={`like-button ${liked ? 'liked' : ''}`} 
+                    onClick={onLike}
+                >
+                    <FaThumbsUp />
+                    <span className="button-text"> {likes} {liked ? 'Unlike' : 'Like'}</span>
                 </button>
                 <button className="comment-button" onClick={onExpand}>
-                    <FaCommentAlt /> Comment ({comments.length})
+                    <FaCommentAlt />
+                    <span className="button-text"> Comment</span>
                 </button>
-                {isUserPost && ( // Only show delete button for the logged-in user's posts
+                {isUserPost && (
                     <button className="delete-button" onClick={onDelete}>
-                        <FaTrash /> Delete
+                        <FaTrash />
+                        <span className="button-text"> Delete</span>
                     </button>
                 )}
             </div>
 
-            {/* Expanded Content: Comments */}
+            {/* Expanded Comments Section */}
             {expanded && (
                 <div className="expanded-comments">
                     <h4>Comments</h4>
                     <ul className="comment-list">
                         {comments.map((comment, idx) => (
-                            <li key={idx}>
-                                <strong>{comment.username}</strong>: {comment.text}
+                            <li key={idx} className="comment">
+                                <strong>{comment.username}:</strong> {comment.text}
                             </li>
                         ))}
                     </ul>
                     <input
                         type="text"
-                        className="comment-input"
-                        placeholder="Add a comment..."
+                        placeholder="Write a comment..."
                         onKeyDown={handleCommentSubmit}
+                        className="comment-input"
                     />
                 </div>
             )}
