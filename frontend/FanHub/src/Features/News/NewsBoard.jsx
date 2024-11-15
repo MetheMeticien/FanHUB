@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import NewsItem from "./NewsItem";
+import Dock from "../Common/Dock/Dock";
 
 const NewsBoard = ({ celeb_name }) => {
   const [articles, setArticles] = useState([]);
@@ -9,8 +10,9 @@ const NewsBoard = ({ celeb_name }) => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
+        console.log(celeb_name);
         // Update with the actual API endpoint, adjusting for celeb_name if necessary
-        const response = await axios.get(`http://localhost:8000/news/by_celeb/Lionel%20Messi`, {
+        const response = await axios.get(`http://localhost:8000/news/by_celeb/${celeb_name}`, {
           params: { skip: 0, limit: 100 }
         });
         
@@ -46,6 +48,7 @@ const NewsBoard = ({ celeb_name }) => {
           url={news.url}
         />
       ))}
+      <Dock/>
     </div>
   );
 };
