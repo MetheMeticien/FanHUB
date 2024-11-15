@@ -9,7 +9,7 @@ export const App = () => {
   const [category, setCategory] = useState("entertainment");
   return (
     <div>
-        <Navbar setCategory={setCategory}/>
+        {/* <Navbar setCategory={setCategory}/> */}
         <NewsBoard category={category}/>
     </div>
   )

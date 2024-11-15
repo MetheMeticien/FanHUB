@@ -4,15 +4,15 @@ import datetime
 
 
 class Story:
-    def __init__(self, headline, story):
+    def __init__(self, headline, story, medialink=None):
         self.headline = headline
         self.body = story
         self.celeb_tags = []
         self.date_time = datetime.date.today()
-    
+        self.medialink = medialink
+        
     def printStory(self):
         print(self.headline)
-
 
 
 class WebScraper:
@@ -91,7 +91,8 @@ class WebScraper:
             "LeBron James",
             "Tilak",
             "Arshdeep",
-            "Alaeddine"
+            "Alaeddine",
+            "Sonic"
         ]
 
     
@@ -109,7 +110,7 @@ class WebScraper:
     def extract_all_stories(self):
         pass
 
-    def extract_story(self, link):
+    def extract_story(self, link,thumbnail_link=None):
         pass
 
     def print_html(self):
@@ -124,6 +125,7 @@ class WebScraper:
     def printAll(self):
         for story in self.stories:
             print(story.headline)
+            print(story.medialink)
             print(story.celeb_tags)
 
 

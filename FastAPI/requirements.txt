@@ -4,3 +4,8 @@ python-multipart
 python-jose[cryptography]
 passlib[bcrypt]
 SQLAlchemy
+beautifulsoup4 
+lxml
+requests
+pyspark
+findspark
