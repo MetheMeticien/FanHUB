@@ -23,10 +23,11 @@ const PostCard = ({
 
     const handleCommentSubmit = (e) => {
         if (e.key === 'Enter' && e.target.value.trim()) {
-            onAddComment({ username: fanName, text: e.target.value.trim() });
+            onAddComment(e.target.value.trim());  // Pass only the comment text
             e.target.value = '';
         }
     };
+    
 
     const handleMediaError = () => {
         setMediaLoaded(false); // Set to false if media fails to load

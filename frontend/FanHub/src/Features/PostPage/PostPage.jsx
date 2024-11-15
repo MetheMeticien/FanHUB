@@ -1,10 +1,9 @@
-// PostPage.js
-
 import React, { useState } from 'react';
 import './PostPage.css';
 import PostCard from './PostCard';
 import { FaClock, FaStar, FaPlus } from 'react-icons/fa';
 import Dock from '../Common/Dock/Dock';
+import CreatePost from './CreatePost';  // Import CreatePost component
 
 const initialPosts = [
     { 
@@ -62,22 +61,25 @@ const PostPage = () => {
     const [newPostContent, setNewPostContent] = useState('');
     const [expandedPostIndex, setExpandedPostIndex] = useState(null);
     const [selectedFilter, setSelectedFilter] = useState('newest');
+    const [showCreatePost, setShowCreatePost] = useState(false);  // State for showing the floating CreatePost form
 
-    const handleCreatePost = () => {
-        if (newPostContent.trim()) {
-            const newPost = {
+    const handleCreatePost = (newPost) => {
+        if (newPost.content.trim()) {
+            const postWithMedia = {
                 postId: `post${posts.length + 1}`, // Incremental post ID
                 fanName: loggedInUser,
                 fanPhoto: 'https://via.placeholder.com/50',
-                content: newPostContent,
-                celebrityId: 'elon',
+                content: newPost.content,
+                celebrityId: newPost.celebrityId,
                 timestamp: new Date(),
                 likes: 0,
                 liked: false,
-                comments: []
+                comments: [],
+                mediaType: newPost.mediaType,
+                mediaUrl: URL.createObjectURL(newPost.mediaFile),  // Convert media file to URL for display
             };
-            setPosts([newPost, ...posts]);
-            setNewPostContent('');
+            setPosts([postWithMedia, ...posts]);
+            setShowCreatePost(false);  // Close the CreatePost form after posting
         }
     };
 
@@ -123,14 +125,14 @@ const PostPage = () => {
             if (idx === index) {
                 return {
                     ...post,
-                    comments: [...post.comments, comment]
+                    comments: [...post.comments, { username: loggedInUser, text: comment }]
                 };
             }
             return post;
         });
         setPosts(updatedPosts);
     };
-
+    
     // Filter posts by selected celebrityId
     const filteredPosts = selectedCelebrityId
         ? posts.filter(post => post.celebrityId === selectedCelebrityId)
@@ -184,11 +186,11 @@ const PostPage = () => {
                             likes={post.likes}
                             comments={post.comments}
                             liked={post.liked}
-                            onLike={() => handleLikePost(index)}
-                            onDelete={() => handleDeletePost(index)}
-                            onExpand={() => toggleExpandPost(index)}
+                            onLike={() => handleLikePost(index)}  // Apply actions on all posts
+                            onDelete={() => handleDeletePost(index)}  // Apply actions on all posts
+                            onExpand={() => toggleExpandPost(index)}  // Apply actions on all posts
                             expanded={expandedPostIndex === index}
-                            onAddComment={(comment) => handleAddComment(index, comment)}
+                            onAddComment={(comment) => handleAddComment(index, comment)}  // Apply actions on all posts
                             isUserPost={post.fanName === loggedInUser}
                         />
                     ))}
@@ -215,14 +217,25 @@ const PostPage = () => {
             </div>
 
             {/* Floating Create Post Button */}
-            <button className="create-post-float-btn" onClick={handleCreatePost}>
+            <button className="create-post-float-btn" onClick={() => setShowCreatePost(true)}>
                 <FaPlus />
             </button>
 
+            {/* Floating CreatePost Form */}
+            {showCreatePost && (
+                <CreatePost
+                    followedCelebrities={followedCelebrities}
+                    onCreatePost={handleCreatePost}
+                    onClose={() => setShowCreatePost(false)}  // Close the CreatePost form
+                />
+            )}
+
             {/* Floating Dock with buttons */}
             <Dock />
+            <br />
+            <br />
         </div>
     );
-}
+};
 
 export default PostPage;

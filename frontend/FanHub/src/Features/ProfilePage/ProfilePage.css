@@ -1,13 +1,17 @@
+/* ProfilePage.css */
+
+/* Main container styling */
 .profile-page {
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
-    background-color: #f9f9f9;
+    background-color: #ffffff; /* White background */
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     margin-top: 40px;
 }
 
+/* Header styling */
 .profile-header {
     display: flex;
     justify-content: space-between;
@@ -17,11 +21,13 @@
 
 .profile-header h1 {
     margin: 0;
+    color: #D81B60; /* Dark pinkish-red for headers */
 }
 
+/* Edit button */
 .edit-toggle-btn {
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: #D81B60; /* Dark pinkish-red */
     color: white;
     border: none;
     border-radius: 4px;
@@ -30,9 +36,10 @@
 }
 
 .edit-toggle-btn:hover {
-    background-color: #0056b3;
+    background-color: #AD1457; /* Slightly darker shade on hover */
 }
 
+/* Profile info section */
 .profile-info {
     display: flex;
     justify-content: space-between;
@@ -65,6 +72,7 @@
 
 label {
     font-weight: bold;
+    color: #D81B60; /* Dark pinkish-red for labels */
 }
 
 input {
@@ -74,20 +82,21 @@ input {
     border-radius: 4px;
     border: 1px solid #ddd;
     font-size: 1rem;
-    background-color: #f1f1f1;
+    background-color: #F8F9FA; /* Light grey for input fields */
 }
 
 input:disabled {
-    background-color: #e0e0e0;
+    background-color: #e0e0e0; /* Slightly darker grey for disabled fields */
 }
 
+/* Save button */
 .profile-actions {
     text-align: center;
 }
 
 .save-profile-btn {
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #D81B60; /* Dark pinkish-red */
     color: white;
     border: none;
     border-radius: 4px;
@@ -96,10 +105,12 @@ input:disabled {
 }
 
 .save-profile-btn:hover {
-    background-color: #218838;
+    background-color: #AD1457; /* Slightly darker shade on hover */
 }
 
+/* Footer section */
 .profile-info-footer {
     margin-top: 20px;
     text-align: center;
+    color: #AD1457; /* Darker pinkish-red */
 }

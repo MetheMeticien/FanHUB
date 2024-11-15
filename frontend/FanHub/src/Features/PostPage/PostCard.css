@@ -8,7 +8,7 @@
     box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    max-width: 800px;  /* A comfortable max-width */
+    max-width: 1500px;  /* A comfortable max-width */
     min-width: 400px;
 }
 
@@ -26,7 +26,7 @@
 
 .post-media-wrapper video {
     width: 100%;  /* Adjust video to fit the container */
-    max-width: 500px;
+    max-width: 600px;
 }
 
 .post-card-header {
