@@ -10,6 +10,7 @@ router = APIRouter()
 
 @router.post("/news", response_model=NewsOut)
 def create_news(news: NewsCreate, db: Session = Depends(get_db)):
+    print(news)
     return crud.create_news(db=db, news=news)
 
 @router.get("/news/{news_id}", response_model=NewsOut)
@@ -36,3 +37,11 @@ def delete_news(news_id: int, db: Session = Depends(get_db)):
     if db_news is None:
         raise HTTPException(status_code=404, detail="News item not found")
     return db_news
+
+
+@router.get("/news/by_celeb/{celeb_name}", response_model=List[NewsOut])
+def read_news_by_celeb(celeb_name: str, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    news = crud.get_news_by_celeb(db=db, celeb_name=celeb_name, skip=skip, limit=limit)
+    if not news:
+        raise HTTPException(status_code=404, detail="No news found for this celebrity")
+    return news

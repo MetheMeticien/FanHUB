@@ -1,24 +1,43 @@
 .post-card {
+    position: static;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 14px;  /* Slightly larger padding for comfort */
+    border-radius: 10px;
+    padding: 25px;  /* Slightly larger padding for comfort */
     margin: 12px 0;  /* Slightly larger margin for spacing */
     background-color: #fff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    max-width: 600px;  /* A comfortable max-width */
+    max-width: 1500px;  /* A comfortable max-width */
+    min-width: 400px;
+}
+
+.post-media-wrapper {
+    width: 100%;
+    margin-top: 12px;
+    display: flex;
+    justify-content: center; /* Center the media */
+}
+
+.post-media {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.post-media-wrapper video {
+    width: 100%;  /* Adjust video to fit the container */
+    max-width: 600px;
 }
 
 .post-card-header {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;  /* A bit more breathing room */
+    margin-bottom: 10px;  /* A bit more breathing room */
 }
 
 .profile-pic {
-    width: 35px;  /* Slightly larger profile picture */
-    height: 35px;
+    width: 40px;  /* Slightly larger profile picture */
+    height: 40px;
     border-radius: 50%;
     margin-right: 8px;
 }
@@ -40,25 +59,34 @@
 
 .post-card-body {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;  /* Change to column for text + image stacking */
+    justify-content: flex-start;
     margin-top: 8px;  /* Added spacing */
 }
 
 .post-description {
-    flex: 1;
     margin-right: 14px;  /* Slightly larger margin-right */
 }
 
+/* Conditionally render the image wrapper only if imageSrc exists */
 .post-image-wrapper {
-    width: 160px;  /* Slightly larger image size */
-    flex-shrink: 0;
+    width: 100%;  /* Full width of the card */
+    overflow: hidden;
+    margin-top: 12px;  /* Spacing between text and image */
+    display: none;  /* Hide by default */
 }
 
-.post-image {
+/* Only show image if imageSrc exists */
+.post-image-wrapper img {
     width: 100%;
-    height: auto;
+    height: auto;  /* Flexible height based on width */
     border-radius: 8px;
+}
+
+/* Ensure the image or video only displays when it exists and loads */
+.post-card-body img,
+.post-card-body video {
+    display: block;
 }
 
 .post-actions {
@@ -74,6 +102,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    margin-top: 10px;
     font-size: 0.85rem;  /* Slightly larger font size */
 }
 
@@ -81,21 +110,26 @@
     color: #007bff;
 }
 
+.button-text {
+    margin-left: 5px;  /* Adjust spacing as needed */
+}
+
 .expanded-comments {
-    margin-top: 10px;
+    margin-top: 25px;
 }
 
 .comment-list {
     list-style-type: none;
     padding: 0;
     margin: 8px 0;  /* Slightly larger margin */
+    font-size: .85rem;
 }
 
 .comment-input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     margin-top: 8px;
-    border-radius: 4px;
+    border-radius: 20px;
     border: 1px solid #ddd;
     font-size: 0.85rem;  /* Slightly larger font size */
 }

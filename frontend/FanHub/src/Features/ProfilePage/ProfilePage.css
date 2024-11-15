@@ -1,0 +1,116 @@
+/* ProfilePage.css */
+
+/* Main container styling */
+.profile-page {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+}
+
+/* Header styling */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-header h1 {
+    margin: 0;
+    color: #D81B60; /* Dark pinkish-red for headers */
+}
+
+/* Edit button */
+.edit-toggle-btn {
+    padding: 8px 16px;
+    background-color: #D81B60; /* Dark pinkish-red */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.edit-toggle-btn:hover {
+    background-color: #AD1457; /* Slightly darker shade on hover */
+}
+
+/* Profile info section */
+.profile-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.profile-picture {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-details {
+    flex: 2;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    color: #D81B60; /* Dark pinkish-red for labels */
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    background-color: #F8F9FA; /* Light grey for input fields */
+}
+
+input:disabled {
+    background-color: #e0e0e0; /* Slightly darker grey for disabled fields */
+}
+
+/* Save button */
+.profile-actions {
+    text-align: center;
+}
+
+.save-profile-btn {
+    padding: 10px 20px;
+    background-color: #D81B60; /* Dark pinkish-red */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.save-profile-btn:hover {
+    background-color: #AD1457; /* Slightly darker shade on hover */
+}
+
+/* Footer section */
+.profile-info-footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #AD1457; /* Darker pinkish-red */
+}
