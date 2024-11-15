@@ -8,6 +8,7 @@ class PostBase(BaseModel):
     user_id: int
     category: str  
     imageUrl: Optional[str] = None
+    celeb_tags:Optional[str] = None
 
 class PostCreate(PostBase):
     pass
@@ -18,6 +19,7 @@ class PostUpdate(BaseModel):
     user_id: Optional[int] = None
     category: Optional[str] = None  
     imageUrl: Optional[str] = None
+    celeb_tags:Optional[str] = None
 
 class PostOut(PostBase):
     id: int

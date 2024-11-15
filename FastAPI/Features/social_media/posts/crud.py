@@ -18,7 +18,8 @@ def create_post(db: Session, post: PostCreate):
         category=post.category,
         imageUrl=post.imageUrl,
         user_id=post.user_id,  
-        author=user_instance 
+        author=user_instance,
+        celeb_tags = post.celeb_tags
     )
 
     db.add(db_post)
@@ -31,6 +32,9 @@ def get_post(db: Session, post_id: int):
 
 def get_all_posts(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Post).offset(skip).limit(limit).all()
+
+def get_posts_by_celeb(db: Session, celeb_name: str, skip: int = 0, limit: int = 10):
+    return db.query(Post).filter(Post.celeb_tags.like(f"%{celeb_name}%")).offset(skip).limit(limit).all()
 
 def update_post(db: Session, post_id: int, post: PostUpdate):
     db_post = get_post(db, post_id)

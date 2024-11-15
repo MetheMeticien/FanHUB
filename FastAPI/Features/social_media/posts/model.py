@@ -18,7 +18,7 @@ class Post(Base):
 
     # Establish relationship with User model
     author = relationship("User", back_populates="posts")  # This replaces the old author field
-    
+    celeb_tags = Column(String, nullable=True) 
     
     notifications = relationship("Notification", back_populates="post")
     likes = relationship("Like", back_populates="post", cascade="all, delete-orphan")

@@ -35,3 +35,11 @@ def delete_post(post_id: int, db: Session = Depends(get_db)):
     if db_post is None:
         raise HTTPException(status_code=404, detail="Post not found")
     return db_post
+
+
+@router.get("/posts/for_celeb/{celeb_name}", response_model=List[PostOut])
+def read_news_by_celeb(celeb_name: str, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    news = crud.get_posts_by_celeb(db=db, celeb_name=celeb_name, skip=skip, limit=limit)
+    if not news:
+        raise HTTPException(status_code=404, detail="No news found for this celebrity")
+    return news

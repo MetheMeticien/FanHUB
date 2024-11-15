@@ -13,7 +13,7 @@ const CelebPage = () => {
       
       <Routes>
         <Route path="news" element={<NewsBoard celeb_name={celeb_name}/>} />
-        <Route path="posts" element={<PostPage />} />
+        <Route path="posts" element={<PostPage celeb_name={celeb_name} />} />
       </Routes>
     </div>
   );

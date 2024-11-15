@@ -1,63 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './PostPage.css';
 import PostCard from './PostCard';
 import { FaClock, FaStar, FaPlus } from 'react-icons/fa';
 import Dock from '../Common/Dock/Dock';
 
-const initialPosts = [
-    { 
-        postId: 'post1', 
-        fanName: 'Ruhan', 
-        fanPhoto: 'https://via.placeholder.com/50', 
-        content: 'Excited about the new rocket launch!', 
-        celebrityId: 'elon', 
-        timestamp: new Date(),
-        likes: 0,
-        liked: false,
-        comments: [],
-        mediaType: 'image',
-        mediaUrl: 'https://via.placeholder.com/500'
-    },
-    { 
-        postId: 'post2', 
-        fanName: 'Ali', 
-        fanPhoto: 'https://via.placeholder.com/50', 
-        content: 'Beyoncé is amazing! Can’t wait for the concert!', 
-        celebrityId: 'beyonce', 
-        timestamp: new Date(),
-        likes: 0,
-        liked: false,
-        comments: [],
-        mediaType: 'video',  
-        mediaUrl: 'https://www.w3schools.com/html/mov_bbb.mp4' 
-    },
-    { 
-        postId: 'post3', 
-        fanName: 'Maya', 
-        fanPhoto: 'https://via.placeholder.com/50', 
-        content: 'Ronaldo is the best footballer!', 
-        celebrityId: 'ronaldo', 
-        timestamp: new Date(),
-        likes: 0,
-        liked: false,
-        comments: [],
-        mediaType: 'image',
-        mediaUrl: 'https://via.placeholder.com/500'
-    }
-];
-
-const followedCelebrities = [
-    { name: 'Elon Musk', id: 'elon' }, 
-    { name: 'Beyoncé', id: 'beyonce' }, 
-    { name: 'Cristiano Ronaldo', id: 'ronaldo' }
-];
-
-function PostPage() {
-    const [posts, setPosts] = useState(initialPosts);
-    const [selectedCelebrityId, setSelectedCelebrityId] = useState('');  // Track selected celebrity
+const PostPage = ({ celeb_name }) => {
+    const [posts, setPosts] = useState([]);
     const [newPostContent, setNewPostContent] = useState('');
     const [expandedPostIndex, setExpandedPostIndex] = useState(null);
     const [selectedFilter, setSelectedFilter] = useState('newest');
+
+    // Fetch posts from API when the component mounts or when celebName prop changes
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                // Use the celeb_name prop to fetch the posts
+                const response = await fetch(`http://localhost:8000/posts/for_celeb/${celeb_name}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch posts');
+                }
+                const data = await response.json();
+                console.log(data)
+                setPosts(data);
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            }
+        };
+
+        // Fetch posts only if celeb_name exists (avoid fetching empty URL)
+        if (celeb_name) {
+            fetchPosts();
+        }
+    }, [celeb_name]); // Re-fetch when celeb_name prop changes
 
     const handleCreatePost = () => {
         if (newPostContent.trim()) {
@@ -127,23 +101,18 @@ function PostPage() {
         setPosts(updatedPosts);
     };
 
-    // Filter posts by selected celebrityId
-    const filteredPosts = selectedCelebrityId
-        ? posts.filter(post => post.celebrityId === selectedCelebrityId)
-        : posts;
-
     return (
         <div className="post-page-container">
             {/* Left Pane: Celebrities List */}
             <div className="left-pane">
                 <h3>Celebrity I Follow</h3>
                 <ul className="celebrity-list">
-                    {followedCelebrities.map((celebrity) => (
+                    {['elon', 'beyonce', 'ronaldo'].map((celebId) => (
                         <li 
-                            key={celebrity.id} 
-                            onClick={() => setSelectedCelebrityId(celebrity.id)}
+                            key={celebId} 
+                            onClick={() => setSelectedCelebrityId(celebId)}
                         >
-                            {celebrity.name}
+                            {celebId.charAt(0).toUpperCase() + celebId.slice(1)} {/* Capitalize first letter */}
                         </li>
                     ))}
                 </ul>
@@ -152,24 +121,25 @@ function PostPage() {
             {/* Middle Pane: Post Section */}
             <div className="middle-pane">
                 <div className="post-section">
-                    {filteredPosts.map((post, index) => (
+                    {posts.map((post, index) => (
                         <PostCard
-                            key={post.postId}
-                            fanName={post.fanName}
-                            fanPhoto={post.fanPhoto}
-                            content={post.content}
-                            timestamp={post.timestamp}
-                            imageSrc={post.mediaUrl}
-                            mediaType={post.mediaType}
-                            likes={post.likes}
-                            comments={post.comments}
-                            liked={post.liked}
-                            onLike={() => handleLikePost(index)}
-                            onDelete={() => handleDeletePost(index)}
-                            onExpand={() => toggleExpandPost(index)}
-                            expanded={expandedPostIndex === index}
-                            onAddComment={(comment) => handleAddComment(index, comment)}
-                        />
+                        key={post.postId || index}  // Fallback to index if postId is not reliable
+                        fanName={post.fanName}
+                        fanPhoto={post.fanPhoto}
+                        content={post.content}
+                        timestamp={post.timestamp}
+                        imageSrc={post.imageUrl}
+                        mediaType="image"
+                        likes={post.likes}
+                        comments={post.comments}
+                        liked={post.liked}
+                        onLike={() => handleLikePost(index)}
+                        onDelete={() => handleDeletePost(index)}
+                        onExpand={() => toggleExpandPost(index)}
+                        expanded={expandedPostIndex === index}
+                        onAddComment={(comment) => handleAddComment(index, comment)}
+                      />
+                      
                     ))}
                 </div>
             </div>

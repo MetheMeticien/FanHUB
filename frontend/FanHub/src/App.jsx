@@ -7,7 +7,9 @@ import RegisterPage from './Features/RegisterPage/register';
 import ProfilePage from './Features/ProfilePage/ProfilePage';
 import NewsBoard from './Features/News/NewsBoard';
 import CelebPage from './Features/Celeb/CelebPage';
+import PrivateRoute from './PrivateRoute';
 import { useState } from 'react';
+import ProtectedRoute from './PrivateRoute';
 
 
 
@@ -22,11 +24,12 @@ function App() {
       {location.pathname !== '/' && location.pathname !== '/register' && <Navbar />}
         <Routes>
           <Route path='/' element={<LoginPage />} />
-          <Route path="/celeb/:celeb_name/*" element={<CelebPage />} />
-          <Route path='/news' element={<NewsBoard />} />
-          <Route path='/posts' element={<PostPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path="/celeb/:celeb_name/*" element={<ProtectedRoute><CelebPage /></ProtectedRoute>} />
+          {/* <Route path='/news' element={<NewsBoard />} />
+          <Route path='/posts' element={<PostPage />} /> */}
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         </Routes>
       </main>
     </>

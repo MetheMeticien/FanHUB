@@ -1,99 +1,59 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './ProfilePage.css';
+import api from '../Auth/api';
 
 const ProfilePage = () => {
-    // Initial profile data (in a real app, this could come from an API or context)
-    const [user, setUser] = useState({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        joined: 'January 1, 2022',
-        profilePic: 'https://via.placeholder.com/150' // Placeholder image
-    });
+    const [user, setUser] = useState(null); // Store the current user data
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+              const token = localStorage.getItem("token");
+              const response = await api.get(`/me?token=${token}`);  // Pass token in the query string
+              setUser(response.data);
+              console.log(user);
+              setLoading(false);
+            } catch (err) {
+              console.error("Error fetching user data:", err.response ? err.response.data : err);
+              setError('Error fetching user data');
+              setLoading(false);
+            }
+          };
+          
+    
+        fetchUserData();
+      }, []);
+    
+      if (loading) return <h2>Loading...</h2>;
+      if (error) return <h2>{error}</h2>;
 
-    // Editable fields state
-    const [editable, setEditable] = useState(false);
-    const [name, setName] = useState(user.name);
-    const [email, setEmail] = useState(user.email);
-    const [profilePic, setProfilePic] = useState(user.profilePic);
 
-    // Toggle edit mode
-    const toggleEdit = () => {
-        setEditable(!editable);
-    };
-
-    // Handle form submit
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Update user data
-        setUser({ name, email, profilePic, joined: user.joined });
-        setEditable(false);
-    };
 
     return (
         <div className="profile-page">
             <div className="profile-header">
                 <h1>Your Profile</h1>
-                <button onClick={toggleEdit} className="edit-toggle-btn">
-                    {editable ? 'Cancel' : 'Edit Profile'}
-                </button>
             </div>
 
             <div className="profile-info">
                 <div className="profile-picture">
                     <img
-                        src={profilePic}
+                        src={user.profilePic || 'https://via.placeholder.com/150'} // Assuming profilePic is part of user data
                         alt="Profile"
                         className="profile-img"
                     />
                 </div>
                 <div className="profile-details">
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="name">Name:</label>
-                            <input
-                                type="text"
-                                id="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                disabled={!editable}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email">Email:</label>
-                            <input
-                                type="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                disabled={!editable}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="profilePic">Profile Picture URL:</label>
-                            <input
-                                type="text"
-                                id="profilePic"
-                                value={profilePic}
-                                onChange={(e) => setProfilePic(e.target.value)}
-                                disabled={!editable}
-                            />
-                        </div>
-
-                        {editable && (
-                            <div className="profile-actions">
-                                <button type="submit" className="save-profile-btn">
-                                    Save Changes
-                                </button>
-                            </div>
-                        )}
-                    </form>
+                    <p><strong>Username:</strong> {user.username}</p>
+                    <p><strong>First Name:</strong> {user.firstname}</p>
+                    <p><strong>Last Name:</strong> {user.lastname}</p>
+                    <p><strong>Gender:</strong> {user.gender}</p>
+                    {/* <p><strong>Email:</strong> {user.username}</p> */}
+                    {/* <p><strong>Joined:</strong> {user.joined}</p> */}
                 </div>
-            </div>
-
-            <div className="profile-info-footer">
-                <p><strong>Joined:</strong> {user.joined}</p>
             </div>
         </div>
     );
