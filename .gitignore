@@ -3,6 +3,7 @@
 /frontend/FanHub/node_modules/*
 /frontend/Omi/node_modules/*
 /FastAPI/fastapi_venv
+/Gemini_server/gemini_venv
 /Scraper/myvenv
 *.egg-info/
 *.egg
