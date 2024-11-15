@@ -6,6 +6,7 @@ import LoginPage from './Features/LoginPage/LoginPage';
 import RegisterPage from './Features/RegisterPage/register';
 import ProfilePage from './Features/ProfilePage/ProfilePage';
 import NewsBoard from './Features/News/NewsBoard';
+import CelebPage from './Features/Celeb/CelebPage';
 import { useState } from 'react';
 
 
@@ -21,7 +22,8 @@ function App() {
       {location.pathname !== '/' && location.pathname !== '/register' && <Navbar />}
         <Routes>
           <Route path='/' element={<LoginPage />} />
-          <Route path='/news' element={<NewsPage />} />
+          <Route path="/celeb/:celeb_name/*" element={<CelebPage />} />
+          <Route path='/news' element={<NewsBoard />} />
           <Route path='/posts' element={<PostPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
