@@ -3,6 +3,7 @@
 /frontend/node_modules
 /FastAPI/fastapi_venv
 /Scraper/myvenv
+/Gemini_server/gemini_venv
 *.egg-info/
 *.egg
 
