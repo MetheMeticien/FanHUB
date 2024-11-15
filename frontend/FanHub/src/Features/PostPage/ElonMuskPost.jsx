@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './PostPage.css';
-import Sidebar from '../Common/Sidebar/Sidebar';
 
 const initialCelebrities = [
     { name: 'TBR', photo: "https://cdn.mos.cms.futurecdn.net/zKkfaRXKMMnH96X3Dbv3xV-970-80.jpg", content: 'Caught a new rocket yesterday!' },
