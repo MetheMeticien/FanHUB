@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from Scraper import WebScraper
-from Scraper import Story
+from .Scraper import WebScraper
+from .Scraper import Story
 
 class PeopleScraper(WebScraper):
     def __init__(self):
@@ -11,61 +11,68 @@ class PeopleScraper(WebScraper):
         self.fetch_homepage()  
         
         soup = BeautifulSoup(self.homepage_content, 'html.parser')
-        headlines = soup.find_all('a', class_=["card__content "])
-
+        headlines = soup.find_all('a', class_=["comp mntl-card-list-items mntl-universal-card mntl-document-card mntl-card card card--no-image"])
         for headline in headlines:
             link = headline.get('href')
             story = self.extract_story(link)
-            if(story.headline != "No headline found"):
+            if(story.headline != "No headline found" and story.body != "No article body found" and story not in self.stories):
                 self.stories.append(story)
                 self.celebrity_find(story)
-                # print('*'*20)
-                # print(story.headline)
-                # print('_'*20)
-                # print(story.body) 
-                # print('*'*20)  
-
         
     
     def extract_story(self, link):
+        img_url = "No image found"
         try:
             print("Connecting to webpage...")
-            article_url = f"https://people.com/celebrity/{link}"
+            article_url = f"{link}"
             # Set a timeout of 10 seconds (adjustable as needed)
             response = requests.get(article_url, headers=self.headers, timeout=10)
             print("Connection established")
 
             article_soup = BeautifulSoup(response.content, 'html.parser')
-
             # Extract the headline
             headline = article_soup.find('h1')
             headline_text = headline.get_text(strip=True) if headline else "No headline found"
-
             # Extract the body content
-            article_body = article_soup.find('div', class_='loc article-content')
+            article_body = article_soup.find('main', class_='loc main')
+            
             if article_body:
                 paragraphs = article_body.find_all('p')
                 body_text = "\n".join([p.get_text(strip=True) for p in paragraphs])
-
-                # Attempt to find an image URL in different potential locations
-                img_url = "No image found"
-                
                 # Check for an image within an <img> tag
-                img_tag = article_soup.find('img')
-                if img_tag and img_tag.get('src'):
-                    img_url = img_tag['src']
-                
-                # Check for background image in the CSS style attribute
+                figure_tags = article_body.find_all('figure', class_='comp figure-article')
+                for figure in figure_tags:
+                    img_tag = figure.find('img')
+                    if img_tag and img_tag.get('src'):
+                        img_url = img_tag['src']
+                        break  # Stop at the first valid image
+
+                # 2. If not found, check for any <img> tag inside <figure> tags
                 if img_url == "No image found":
-                    img_tag = article_soup.find('div', class_='img-wrap')
-                    if img_tag:
-                        style_attr = img_tag.get('style', '')
-                        if 'background-image' in style_attr:
-                            # Extract image URL from background-image style
-                            img_url = style_attr.split('url(')[1].split(')')[0].strip('"')
+                    figure_tags = article_body.find_all('figure')
+                    for figure in figure_tags:
+                        img_tag = figure.find('img')
+                        if img_tag and img_tag.get('src'):
+                            img_url = img_tag['src']
+                            break
+
+                # 3. If still not found, check for standalone <img> tags in the article body
+                if img_url == "No image found":
+                    img_tags = article_body.find_all('img')
+                    for img_tag in img_tags:
+                        if img_tag.get('src'):
+                            img_url = img_tag['src']
+                            break
+
+                # 4. Handle srcset for higher-quality images if available
+                if img_url == "No image found":
+                    for img_tag in img_tags:
+                        if img_tag.get('srcset'):
+                            srcset_urls = [entry.split(' ')[0] for entry in img_tag['srcset'].split(',')]
+                            img_url = srcset_urls[0]  # Take the first image from srcset
+                            break
             else:
                 body_text = "No article body found"
-                img_url = "No image found"
 
         except requests.exceptions.Timeout:
             print("Connection timed out")
@@ -75,15 +82,12 @@ class PeopleScraper(WebScraper):
 
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
-            # Return a story with a placeholder headline and body text for any other request errors
             headline_text = "No headline found"
             body_text = str(e)
 
         return Story(headline_text, body_text,img_url)
 
         
-        
-
-ppl = PeopleScraper()
-ppl.extract_all_stories()
-ppl.printAll()
+# ppl = PeopleScraper()
+# ppl.extract_all_stories()
+# ppl.printAll()

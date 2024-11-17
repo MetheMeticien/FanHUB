@@ -9,7 +9,7 @@ const initialPosts = [
     { 
         postId: 'post1', 
         fanName: 'Ruhan', 
-        fanPhoto: 'https://via.placeholder.com/50', 
+        fanPhoto: 'https://ecdn.dhakatribune.net/contents/cache/images/800x450x1/uploads/media/2024/07/25/Shafin-Ahmed-Miles-b617ba2cde0019506dd7423c0d3707fc.jpg?jadewits_media_id=24894', 
         content: 'Excited about the new rocket launch!', 
         celebrityId: 'elon', 
         timestamp: new Date(),
@@ -17,7 +17,7 @@ const initialPosts = [
         liked: false,
         comments: [],
         mediaType: 'image',
-        mediaUrl: 'https://via.placeholder.com/500'
+        mediaUrl: 'https://dims.apnews.com/dims4/default/49a96f1/2147483647/strip/true/crop/5904x3137+0+0/resize/599x318!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F31%2Fa8%2Fe2e760a420e4925e41b6e06cc298%2Fcf21dd697c64497a8c9d26704a88835d'
     },
     { 
         postId: 'post2', 
@@ -26,7 +26,7 @@ const initialPosts = [
         content: 'Beyoncé is amazing! Can’t wait for the concert!', 
         celebrityId: 'beyonce', 
         timestamp: new Date(),
-        likes: 0,
+        likes: 69,
         liked: false,
         comments: [],
         mediaType: 'video',  
@@ -39,11 +39,11 @@ const initialPosts = [
         content: 'Ronaldo is the best footballer!', 
         celebrityId: 'ronaldo', 
         timestamp: new Date(),
-        likes: 0,
+        likes: 3,
         liked: false,
         comments: [],
         mediaType: 'image',
-        mediaUrl: 'https://via.placeholder.com/500'
+        mediaUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTreJaDKN3blcrNMA_5rxXLed4Jo9v1SU3z4w&s'
     }
 ];
 

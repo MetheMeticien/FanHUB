@@ -4,9 +4,9 @@ import './ProfilePage.css';
 const ProfilePage = () => {
     // Initial profile data (in a real app, this could come from an API or context)
     const [user, setUser] = useState({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        joined: 'January 1, 2022',
+        name: 'Ruhan',
+        email: 'ahmedshafin@iut-dhaka.edu',
+        joined: 'September 1, 2024',
         profilePic: 'https://via.placeholder.com/150' // Placeholder image
     });
 

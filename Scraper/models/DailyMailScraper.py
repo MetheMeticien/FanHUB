@@ -21,7 +21,7 @@ class DailyMailScraper(WebScraper):
                 link = link.replace("index.html", "")
                 full_link = f"https://www.dailymail.co.uk{link}"
                 story = self.extract_story(full_link)
-                if story.headline != "No headline found":
+                if(story.headline != "No headline found" and story.body != "No article body found"):
                     self.stories.append(story)
                     self.celebrity_find(story)
                     # print('*'*20)

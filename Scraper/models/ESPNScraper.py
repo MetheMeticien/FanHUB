@@ -16,7 +16,7 @@ class ESPNScraper(WebScraper):
         for headline in headlines:
             link = headline.get('href')
             story = self.extract_story(link)
-            if(story.headline != "No headline found"):
+            if(story.headline != "No headline found" and story.body != "No article body found" and story not in self.stories):
                 self.stories.append(story)
                 self.celebrity_find(story)
                 # print('*'*20)

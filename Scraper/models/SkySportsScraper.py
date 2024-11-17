@@ -35,7 +35,7 @@ class SkySportsScraper(WebScraper):
             # Now pass both the link and thumbnail link to extract_story
             story = self.extract_story(link, thumbnail_link)
 
-            if(story.headline != "No headline found"):
+            if(story.headline != "No headline found" and story.body != "No article body found" and story not in self.stories):
                 self.stories.append(story)
                 self.celebrity_find(story)
                 # print('*'*20)
