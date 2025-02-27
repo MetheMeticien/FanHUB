@@ -19,8 +19,8 @@ const Dock = () => {
         </button>
       </Link>
       {/* Celebrity page button will be activated later */}
-      <Link to="/celebrity">
-        <button className={`dock-btn ${location.pathname === '/celebrity' ? 'active' : ''}`}>
+      <Link to="/celeb/Lionel%20Messi/news">
+        <button className={`dock-btn ${location.pathname === '/celeb/Lionel%20Messi/news' ? 'active' : ''}`}>
           <FaStar />
         </button>
       </Link>

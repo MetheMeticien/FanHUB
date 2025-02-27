@@ -5,6 +5,7 @@
 /FastAPI/fastapi_venv
 /Gemini_server/gemini_venv
 /Scraper/myvenv
+/Gemini_server/gemini_venv
 *.egg-info/
 *.egg
 

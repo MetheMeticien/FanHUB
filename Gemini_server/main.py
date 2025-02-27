@@ -17,7 +17,7 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
-genai.configure(api_key="AIzaSyAPc9zXYRzFza17MVeJc_BwCebvNiQWaBE")
+genai.configure(api_key="AIzaSyDps8o4RTRq4uNZAFFt8e4VlX8niaOxo6A")
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 

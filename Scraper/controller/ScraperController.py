@@ -12,7 +12,7 @@ class ScraperController:
     def scrape_all(self):
         for scraper in self.scrapers:
             scraper.extract_all_stories()
-            scraper.printAll()
+            scraper.write_to_json()
     
     def scrape_celeb_with_date(self, celeb_name, date):
         for scraper in self.scrapers:

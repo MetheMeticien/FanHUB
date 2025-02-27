@@ -1,3 +1,5 @@
+import "./news.css"
+
 const NewsItem = ({title, description, src, url}) => {
   console.log(src);
   return (

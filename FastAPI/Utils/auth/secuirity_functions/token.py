@@ -10,7 +10,7 @@ ALGORITHM = os.getenv('ALGORITHM')
 
 
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
+def create_access_token(data: dict, expires_delta: timedelta):
     to_encode = data.copy()
 
     # Convert expiration time into a timestamp (in seconds)
