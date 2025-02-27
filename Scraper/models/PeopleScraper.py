@@ -85,7 +85,7 @@ class PeopleScraper(WebScraper):
             headline_text = "No headline found"
             body_text = str(e)
 
-        return Story(headline_text, body_text,img_url)
+        return Story(headline_text, body_text,"People", link, img_url)
 
         
 # ppl = PeopleScraper()

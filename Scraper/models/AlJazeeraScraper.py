@@ -56,7 +56,7 @@ class AlJazeeraScraper(WebScraper):
             body_text = str(e)
             img_url = "No image found"
         
-        return Story(headline_text, body_text, img_url)
+        return Story(headline_text, body_text,"AlJazeera",link, img_url)
 
 
 # jazeera = AlJazeeraScraper()

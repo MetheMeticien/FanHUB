@@ -1,9 +1,9 @@
 from playwright.sync_api import sync_playwright
-from Scraper import WebScraper, Story
+from .Scraper import WebScraper, Story
 
 class TwitterScraper(WebScraper):
     def __init__(self):
-        super().__init__(None)
+        super().__init__("https://x.com/")
         
     def extract_story(self, link):
         _xhr_calls = []
@@ -71,7 +71,7 @@ class TwitterScraper(WebScraper):
                             
                     print(f"Extracted tweet: {text}")
                     print(f"Extracted image: {img_url}")
-                    return Story("Twitter Post", text, img_url)
+                    return Story("Twitter Post", text,"Twitter", link, img_url)
 
                 except Exception as e:
                     print(f"Error extracting tweet data from {link}: {e}")
@@ -140,7 +140,6 @@ class TwitterScraper(WebScraper):
             self.extract_story(link)
 
 
-# Instantiate and run the scraper
 twitter = TwitterScraper()
 twitter.extract_all_stories()
 #twitter.extract_story("https://x.com/elonmusk/status/1854026234339938528")  

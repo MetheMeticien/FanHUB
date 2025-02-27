@@ -76,7 +76,7 @@ class IGNScraper(WebScraper):
             headline_text = "No headline found"
             body_text = str(e)
 
-        return Story(headline_text, body_text,img_url)
+        return Story(headline_text, body_text,"IGN", f"https://www.ign.com{link}", img_url)
         
 
 # ign_game = IGNScraper()

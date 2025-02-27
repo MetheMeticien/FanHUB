@@ -24,12 +24,6 @@ class DailyMailScraper(WebScraper):
                 if(story.headline != "No headline found" and story.body != "No article body found"):
                     self.stories.append(story)
                     self.celebrity_find(story)
-                    # print('*'*20)
-                    # print(story.headline)
-                    # print('_'*20)
-                    # print(story.body) 
-                    # print('*'*20)  
-
     
     def extract_story(self, link):
         try:
@@ -67,7 +61,7 @@ class DailyMailScraper(WebScraper):
             body_text = str(e)
             img_url = "No image found"
 
-        return Story(headline_text, body_text, img_url)
+        return Story(headline_text, body_text,"Daily Mail",link, img_url)
 
 
 # dailymail = DailyMailScraper()

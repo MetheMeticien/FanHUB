@@ -60,12 +60,12 @@ class DailyStarScraper(WebScraper):
 
         for link, content in story_contents.items():
             if content:
-                story = self.extract_story(content)
+                story = self.extract_story(content,link)
                 if story.headline != "No headline found" and story.body != "No article body found" and story not in self.stories:
                     self.stories.append(story)
                     self.celebrity_find(story)
 
-    def extract_story(self, page_content):
+    def extract_story(self, page_content,link):
         try:
             article_soup = BeautifulSoup(page_content, 'html.parser')
             headline = article_soup.find('h1')
@@ -80,7 +80,7 @@ class DailyStarScraper(WebScraper):
             if og_image_tag and 'content' in og_image_tag.attrs:
                 img_url = og_image_tag['content']  
 
-            return Story(headline_text, body_text, img_url)
+            return Story(headline_text, body_text,"The Daily Star",link, img_url)
 
         except Exception as e:
             print(f"Error parsing story: {e}")

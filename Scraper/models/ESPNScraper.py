@@ -19,13 +19,7 @@ class ESPNScraper(WebScraper):
             if(story.headline != "No headline found" and story.body != "No article body found" and story not in self.stories):
                 self.stories.append(story)
                 self.celebrity_find(story)
-                # print('*'*20)
-                # print(story.headline)
-                # print('_'*20)
-                # print(story.body) 
-                # print('*'*20)  
-
-        
+       
     
     def extract_story(self, link):
         try:
@@ -70,10 +64,8 @@ class ESPNScraper(WebScraper):
             headline_text = "No headline found"
             body_text = str(e)
 
-        return Story(headline_text, body_text,img_url)
-
-        
-        
+        return Story(headline_text, body_text,"ESPN", f"https://www.espn.in{link}", img_url)
+    
 
 # espn = ESPNScraper()
 # espn.extract_all_stories()

@@ -1,1 +1,3 @@
-js-content-entity-body content-entity-body
+ssp = SkySportsScraper()
+ssp.extract_all_stories()
+ssp.printAll()

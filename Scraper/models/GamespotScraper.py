@@ -30,7 +30,7 @@ class GamespotScraper(WebScraper):
             elif link.startswith("/articles"):
                 article_url = f"https://www.gamespot.com{link}"
             else:
-                return Story("No headline found", "No article body found")
+                return Story("No headline found", "No article body found",None,None)
             response = requests.get(article_url, headers=self.headers, timeout=10)
             print("Connection established")
 
@@ -82,11 +82,8 @@ class GamespotScraper(WebScraper):
             headline_text = "No headline found"
             body_text = str(e)
 
-        return Story(headline_text, body_text,media_url)
-
-        
-        
-
+        return Story(headline_text, body_text,"GameSpot",link, media_url)
+       
 # gamespot = GamespotScraper()
 # gamespot.extract_all_stories()
 #gamespot.printAll()

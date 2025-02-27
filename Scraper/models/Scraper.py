@@ -1,15 +1,19 @@
 import requests
 from bs4 import BeautifulSoup
+import json
+import os
 import datetime
 
 
 class Story:
-    def __init__(self, headline, story, medialink=None):
+    def __init__(self, headline, story, source_name, source_url, medialink=None):
         self.headline = headline
         self.body = story
         self.celeb_tags = []
-        self.date_time = datetime.date.today()
+        self.date_time = datetime.datetime.now()
         self.medialink = medialink
+        self.source_name = source_name
+        self.source_url = source_url
         
     def printStory(self):
         print(self.headline)
@@ -193,6 +197,35 @@ class WebScraper:
             print(story.headline)
             print(story.medialink)
             print(story.celeb_tags)
+    
+    def write_to_json(self):
+        filename = "stories.json"
+        
+        if os.path.exists(filename):
+            with open(filename, "r", encoding="utf-8") as file:
+                try:
+                    data = json.load(file)
+                except json.JSONDecodeError:
+                    data = []
+        else:
+            data = []
+
+        for story in self.stories:
+            data.append({
+                "headline": story.headline,
+                "body": story.body,
+                "celeb_tags": story.celeb_tags,
+                "date_time": str(story.date_time),
+                "medialink": story.medialink,
+                "source_name": story.source_name,
+                "source_url": story.source_url
+            })
+
+        with open(filename, "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=4, ensure_ascii=False)
+
+        print(f"Stories successfully written to {filename}")
+                
 
 
 # url = "https://www.espn.in"
