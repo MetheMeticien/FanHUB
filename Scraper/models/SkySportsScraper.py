@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from .Scraper import WebScraper
 from .Scraper import Story
+import re
 
 class SkySportsScraper(WebScraper):
     def __init__(self):
@@ -35,16 +36,10 @@ class SkySportsScraper(WebScraper):
             # Now pass both the link and thumbnail link to extract_story
             story = self.extract_story(link, thumbnail_link)
 
-            if(story.headline != "No headline found"):
+            if(story.headline != "No headline found" and story.body != "No article body found" and story not in self.stories):
                 self.stories.append(story)
                 self.celebrity_find(story)
-                # print('*'*20)
-                # print(story.headline)
-                # print('_'*20)
-                # print(story.body) 
-                # print('*'*20) 
-
-        
+           
     
     def extract_story(self, link,thumbnail_link=None):
         try:
@@ -76,7 +71,10 @@ class SkySportsScraper(WebScraper):
             headline_text = "No headline found"
             body_text = str(e)
 
-        return Story(headline_text, body_text,thumbnail_link)        
+        body_text = re.sub(r'\s+', ' ', body_text).strip()
+        headline_text = re.sub(r'\s+', ' ', headline_text).strip()
+        
+        return Story(headline_text, body_text,"Sky Sports", f"https://www.skysports.com{link}", thumbnail_link)        
 
 # ssp = SkySportsScraper()
 # ssp.extract_all_stories()
